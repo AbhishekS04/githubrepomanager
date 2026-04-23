@@ -24,6 +24,7 @@ export interface Repo {
   updated_at: string;
   size: number;
   description: string | null;
+  default_branch: string;
   owner: {
     login: string;
   };

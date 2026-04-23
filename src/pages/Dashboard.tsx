@@ -5,6 +5,7 @@ import { useAuthStore } from '../store/authStore';
 import { FilterBar } from '../components/repos/FilterBar';
 import { RepoList } from '../components/repos/RepoList';
 import { ActionBar } from '../components/layout/ActionBar';
+import { TelegramSetupBanner } from '../components/ui/TelegramSetupBanner';
 import { useNavigate } from 'react-router-dom';
 
 export const Dashboard: React.FC = () => {
@@ -88,6 +89,7 @@ export const Dashboard: React.FC = () => {
 
   return (
     <div className="relative">
+      <TelegramSetupBanner />
       <FilterBar totalCount={filteredAndSortedRepos.length} />
       <RepoList repos={filteredAndSortedRepos} isLoading={loading} />
       <ActionBar />
