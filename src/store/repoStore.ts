@@ -1,0 +1,39 @@
+import { create } from 'zustand';
+import { fetchAllRepos } from '../lib/github';
+import type { Repo } from '../lib/github';
+
+interface RepoState {
+  repos: Repo[];
+  loading: boolean;
+  error: string | null;
+  fetchRepos: () => Promise<void>;
+  updateRepoLocally: (repoId: number, updates: Partial<Repo>) => void;
+  removeReposLocally: (repoIds: number[]) => void;
+}
+
+export const useRepoStore = create<RepoState>((set) => ({
+  repos: [],
+  loading: false,
+  error: null,
+  fetchRepos: async () => {
+    set({ loading: true, error: null });
+    try {
+      const repos = await fetchAllRepos();
+      set({ repos, loading: false });
+    } catch (err: any) {
+      set({ error: err.message || 'Failed to fetch repositories', loading: false });
+    }
+  },
+  updateRepoLocally: (repoId, updates) => {
+    set((state) => ({
+      repos: state.repos.map((repo) =>
+        repo.id === repoId ? { ...repo, ...updates } : repo
+      ),
+    }));
+  },
+  removeReposLocally: (repoIds) => {
+    set((state) => ({
+      repos: state.repos.filter((repo) => !repoIds.includes(repo.id)),
+    }));
+  },
+}));
