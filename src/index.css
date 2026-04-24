@@ -4,65 +4,149 @@
 
 @layer base {
   :root {
-    --background: 220 10% 4%; /* #0a0a0a equivalent but slightly cooler */
-    --foreground: 210 20% 98%;
+    /* Core B&W palette */
+    --background: 0 0% 4%;          /* #0a0a0a */
+    --surface: 0 0% 7%;             /* #121212 */
+    --surface-2: 0 0% 10%;         /* #1a1a1a */
+    --foreground: 0 0% 97%;         /* #f7f7f7 */
 
-    --card: 220 10% 6%;
-    --card-foreground: 210 20% 98%;
+    --card: 0 0% 7%;
+    --card-foreground: 0 0% 97%;
+    --popover: 0 0% 7%;
+    --popover-foreground: 0 0% 97%;
 
-    --popover: 220 10% 6%;
-    --popover-foreground: 210 20% 98%;
+    /* Blue accent for primary actions */
+    --primary: 217 91% 60%;         /* #3b82f6 */
+    --primary-foreground: 0 0% 100%;
 
-    --primary: 217.2 91.2% 59.8%; /* electric blue #3b82f6 */
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 0 0% 13%;
+    --secondary-foreground: 0 0% 97%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 20% 98%;
+    --muted: 0 0% 13%;
+    --muted-foreground: 0 0% 55%;   /* #8c8c8c */
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%; /* #6b7280 equivalent */
+    --accent: 0 0% 13%;
+    --accent-foreground: 0 0% 97%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 20% 98%;
+    /* Red for destructive actions */
+    --destructive: 0 72% 51%;       /* #e13535 */
+    --destructive-foreground: 0 0% 100%;
 
-    --destructive: 0 84.2% 60.2%; /* #ef4444 */
-    --destructive-foreground: 210 20% 98%;
+    --border: 0 0% 14%;             /* #242424 */
+    --input: 0 0% 14%;
+    --ring: 217 91% 60%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
-
-    --radius: 0.3rem;
+    --radius: 0.75rem;
   }
 }
 
 @layer base {
   * {
     @apply border-border;
+    box-sizing: border-box;
   }
+
+  html {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    scroll-behavior: smooth;
+  }
+
   body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    background-color: hsl(var(--background));
+    color: hsl(var(--foreground));
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: 'IBM Plex Sans', system-ui, sans-serif;
+    font-weight: 600;
+    line-height: 1.2;
+    letter-spacing: -0.02em;
+  }
+
+  code, .font-mono {
+    font-family: 'JetBrains Mono', monospace;
   }
 }
 
-/* Custom Scrollbar for sleek UI */
-::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
-}
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-::-webkit-scrollbar-thumb {
-  background: hsl(var(--border));
-  border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--muted-foreground));
+/* ---- Glass Card ---- */
+.glass {
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-/* Base resets */
-button {
+.glass-strong {
+  background: rgba(255, 255, 255, 0.07);
+  backdrop-filter: blur(40px) saturate(200%);
+  -webkit-backdrop-filter: blur(40px) saturate(200%);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* ---- Apple-style Floating Nav ---- */
+.floating-nav {
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(24px) saturate(180%);
+  -webkit-backdrop-filter: blur(24px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 9999px;
+}
+
+/* ---- Custom Scrollbar ---- */
+::-webkit-scrollbar { width: 5px; height: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.12); border-radius: 99px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.22); }
+
+/* ---- Smooth selection highlight ---- */
+::selection {
+  background: rgba(59, 130, 246, 0.35);
+  color: #fff;
+}
+
+/* ---- Focus ring ---- */
+*:focus-visible {
+  outline: 2px solid hsl(var(--ring));
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+
+/* ---- Reduce motion ---- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ---- Input field ---- */
+input[type="text"], select {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  color: hsl(var(--foreground));
+  border-radius: 10px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input[type="text"]:focus, select:focus {
   outline: none;
+  border-color: hsl(var(--primary));
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+/* ---- Notification toast container ---- */
+.toast-container {
+  position: fixed;
+  top: 80px;
+  right: 16px;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 360px;
+  width: 100%;
 }
