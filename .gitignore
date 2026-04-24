@@ -29,3 +29,8 @@ dist-ssr
 github_tokens.enc
 .vscode
 .agent
+
+# graphify - ignore ephemeral files, commit graph.json + GRAPH_REPORT.md
+graphify-out/cache/
+graphify-out/manifest.json
+graphify-out/cost.json

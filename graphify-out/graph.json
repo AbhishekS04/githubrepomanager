@@ -1,0 +1,1153 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "postcss.config.js",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/postcss.config.js",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_postcss_config_js",
+      "community": 16,
+      "norm_label": "postcss.config.js"
+    },
+    {
+      "label": "tailwind.config.js",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/tailwind.config.js",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_tailwind_config_js",
+      "community": 17,
+      "norm_label": "tailwind.config.js"
+    },
+    {
+      "label": "eslint.config.js",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/eslint.config.js",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_eslint_config_js",
+      "community": 18,
+      "norm_label": "eslint.config.js"
+    },
+    {
+      "label": "vite.config.ts",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_vite_config_ts",
+      "community": 3,
+      "norm_label": "vite.config.ts"
+    },
+    {
+      "label": "authMiddleware()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
+      "source_location": "L8",
+      "id": "vite_config_authmiddleware",
+      "community": 3,
+      "norm_label": "authmiddleware()"
+    },
+    {
+      "label": "telegramMiddleware()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
+      "source_location": "L55",
+      "id": "vite_config_telegrammiddleware",
+      "community": 3,
+      "norm_label": "telegrammiddleware()"
+    },
+    {
+      "label": "apiPlugin()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
+      "source_location": "L181",
+      "id": "vite_config_apiplugin",
+      "community": 3,
+      "norm_label": "apiplugin()"
+    },
+    {
+      "label": "main.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/main.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_main_tsx",
+      "community": 5,
+      "norm_label": "main.tsx"
+    },
+    {
+      "label": "App.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/App.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_app_tsx",
+      "community": 5,
+      "norm_label": "app.tsx"
+    },
+    {
+      "label": "App()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/App.tsx",
+      "source_location": "L8",
+      "id": "app_app",
+      "community": 5,
+      "norm_label": "app()"
+    },
+    {
+      "label": "Login.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/pages/Login.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_pages_login_tsx",
+      "community": 19,
+      "norm_label": "login.tsx"
+    },
+    {
+      "label": "Dashboard.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/pages/Dashboard.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_pages_dashboard_tsx",
+      "community": 7,
+      "norm_label": "dashboard.tsx"
+    },
+    {
+      "label": "Dashboard()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/pages/Dashboard.tsx",
+      "source_location": "L11",
+      "id": "dashboard_dashboard",
+      "community": 7,
+      "norm_label": "dashboard()"
+    },
+    {
+      "label": "OAuthCallback.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/pages/OAuthCallback.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_pages_oauthcallback_tsx",
+      "community": 8,
+      "norm_label": "oauthcallback.tsx"
+    },
+    {
+      "label": "OAuthCallback()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/pages/OAuthCallback.tsx",
+      "source_location": "L7",
+      "id": "oauthcallback_oauthcallback",
+      "community": 8,
+      "norm_label": "oauthcallback()"
+    },
+    {
+      "label": "AppShell.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/AppShell.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_layout_appshell_tsx",
+      "community": 20,
+      "norm_label": "appshell.tsx"
+    },
+    {
+      "label": "ActionBar.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "community": 1,
+      "norm_label": "actionbar.tsx"
+    },
+    {
+      "label": "handleBulkAction()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L33",
+      "id": "actionbar_handlebulkaction",
+      "community": 1,
+      "norm_label": "handlebulkaction()"
+    },
+    {
+      "label": "handleMakePrivate()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L51",
+      "id": "actionbar_handlemakeprivate",
+      "community": 1,
+      "norm_label": "handlemakeprivate()"
+    },
+    {
+      "label": "handleMakePublic()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L52",
+      "id": "actionbar_handlemakepublic",
+      "community": 1,
+      "norm_label": "handlemakepublic()"
+    },
+    {
+      "label": "handleArchive()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L53",
+      "id": "actionbar_handlearchive",
+      "community": 1,
+      "norm_label": "handlearchive()"
+    },
+    {
+      "label": "handleUnarchive()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L54",
+      "id": "actionbar_handleunarchive",
+      "community": 1,
+      "norm_label": "handleunarchive()"
+    },
+    {
+      "label": "handleDownloadZip()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L55",
+      "id": "actionbar_handledownloadzip",
+      "community": 1,
+      "norm_label": "handledownloadzip()"
+    },
+    {
+      "label": "handleDelete()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L57",
+      "id": "actionbar_handledelete",
+      "community": 4,
+      "norm_label": "handledelete()"
+    },
+    {
+      "label": "TelegramSetupBanner.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/TelegramSetupBanner.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_telegramsetupbanner_tsx",
+      "community": 9,
+      "norm_label": "telegramsetupbanner.tsx"
+    },
+    {
+      "label": "handleDismiss()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/TelegramSetupBanner.tsx",
+      "source_location": "L17",
+      "id": "telegramsetupbanner_handledismiss",
+      "community": 9,
+      "norm_label": "handledismiss()"
+    },
+    {
+      "label": "Checkbox.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/Checkbox.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_checkbox_tsx",
+      "community": 21,
+      "norm_label": "checkbox.tsx"
+    },
+    {
+      "label": "DeleteModal.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/DeleteModal.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_deletemodal_tsx",
+      "community": 6,
+      "norm_label": "deletemodal.tsx"
+    },
+    {
+      "label": "CopyButton()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/DeleteModal.tsx",
+      "source_location": "L15",
+      "id": "deletemodal_copybutton",
+      "community": 6,
+      "norm_label": "copybutton()"
+    },
+    {
+      "label": "handleClose()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/DeleteModal.tsx",
+      "source_location": "L55",
+      "id": "deletemodal_handleclose",
+      "community": 6,
+      "norm_label": "handleclose()"
+    },
+    {
+      "label": "GithubIcon.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/GithubIcon.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_githubicon_tsx",
+      "community": 10,
+      "norm_label": "githubicon.tsx"
+    },
+    {
+      "label": "GithubIcon()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/GithubIcon.tsx",
+      "source_location": "L3",
+      "id": "githubicon_githubicon",
+      "community": 10,
+      "norm_label": "githubicon()"
+    },
+    {
+      "label": "Button.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/Button.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_button_tsx",
+      "community": 22,
+      "norm_label": "button.tsx"
+    },
+    {
+      "label": "RepoList.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoList.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_repos_repolist_tsx",
+      "community": 11,
+      "norm_label": "repolist.tsx"
+    },
+    {
+      "label": "handleSelectAll()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoList.tsx",
+      "source_location": "L16",
+      "id": "repolist_handleselectall",
+      "community": 11,
+      "norm_label": "handleselectall()"
+    },
+    {
+      "label": "RepoRow.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoRow.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_repos_reporow_tsx",
+      "community": 2,
+      "norm_label": "reporow.tsx"
+    },
+    {
+      "label": "formatDistanceToNow()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoRow.tsx",
+      "source_location": "L15",
+      "id": "reporow_formatdistancetonow",
+      "community": 2,
+      "norm_label": "formatdistancetonow()"
+    },
+    {
+      "label": "formatSize()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoRow.tsx",
+      "source_location": "L32",
+      "id": "reporow_formatsize",
+      "community": 2,
+      "norm_label": "formatsize()"
+    },
+    {
+      "label": "getLanguageColor()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoRow.tsx",
+      "source_location": "L37",
+      "id": "reporow_getlanguagecolor",
+      "community": 2,
+      "norm_label": "getlanguagecolor()"
+    },
+    {
+      "label": "RepoRow()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoRow.tsx",
+      "source_location": "L57",
+      "id": "reporow_reporow",
+      "community": 2,
+      "norm_label": "reporow()"
+    },
+    {
+      "label": "FilterBar.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/FilterBar.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_repos_filterbar_tsx",
+      "community": 23,
+      "norm_label": "filterbar.tsx"
+    },
+    {
+      "label": "repoStore.ts",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/store/repoStore.ts",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_store_repostore_ts",
+      "community": 24,
+      "norm_label": "repostore.ts"
+    },
+    {
+      "label": "selectionStore.ts",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/store/selectionStore.ts",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_store_selectionstore_ts",
+      "community": 25,
+      "norm_label": "selectionstore.ts"
+    },
+    {
+      "label": "authStore.ts",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/store/authStore.ts",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_store_authstore_ts",
+      "community": 26,
+      "norm_label": "authstore.ts"
+    },
+    {
+      "label": "auth.ts",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/auth.ts",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_lib_auth_ts",
+      "community": 12,
+      "norm_label": "auth.ts"
+    },
+    {
+      "label": "loginWithGitHub()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/auth.ts",
+      "source_location": "L3",
+      "id": "auth_loginwithgithub",
+      "community": 12,
+      "norm_label": "loginwithgithub()"
+    },
+    {
+      "label": "utils.ts",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/utils.ts",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_lib_utils_ts",
+      "community": 13,
+      "norm_label": "utils.ts"
+    },
+    {
+      "label": "cn()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/utils.ts",
+      "source_location": "L4",
+      "id": "utils_cn",
+      "community": 13,
+      "norm_label": "cn()"
+    },
+    {
+      "label": "github.ts",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "community": 0,
+      "norm_label": "github.ts"
+    },
+    {
+      "label": "initGitHub()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L6",
+      "id": "github_initgithub",
+      "community": 0,
+      "norm_label": "initgithub()"
+    },
+    {
+      "label": "getOctokit()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L10",
+      "id": "github_getoctokit",
+      "community": 0,
+      "norm_label": "getoctokit()"
+    },
+    {
+      "label": "fetchAllRepos()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L33",
+      "id": "github_fetchallrepos",
+      "community": 0,
+      "norm_label": "fetchallrepos()"
+    },
+    {
+      "label": "updateRepoVisibility()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L57",
+      "id": "github_updaterepovisibility",
+      "community": 0,
+      "norm_label": "updaterepovisibility()"
+    },
+    {
+      "label": "updateRepoArchived()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L66",
+      "id": "github_updaterepoarchived",
+      "community": 0,
+      "norm_label": "updaterepoarchived()"
+    },
+    {
+      "label": "deleteRepo()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L75",
+      "id": "github_deleterepo",
+      "community": 0,
+      "norm_label": "deleterepo()"
+    },
+    {
+      "label": "downloadRepoZip()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L83",
+      "id": "github_downloadrepozip",
+      "community": 0,
+      "norm_label": "downloadrepozip()"
+    },
+    {
+      "label": "telegram.ts",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_lib_telegram_ts",
+      "community": 4,
+      "norm_label": "telegram.ts"
+    },
+    {
+      "label": "isTelegramConfigured()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts",
+      "source_location": "L12",
+      "id": "telegram_istelegramconfigured",
+      "community": 4,
+      "norm_label": "istelegramconfigured()"
+    },
+    {
+      "label": "backupRepoToTelegram()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts",
+      "source_location": "L29",
+      "id": "telegram_backuprepototelegram",
+      "community": 4,
+      "norm_label": "backuprepototelegram()"
+    },
+    {
+      "label": "auth.js",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/api/auth.js",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_api_auth_js",
+      "community": 14,
+      "norm_label": "auth.js"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/api/auth.js",
+      "source_location": "L1",
+      "id": "auth_handler",
+      "community": 14,
+      "norm_label": "handler()"
+    },
+    {
+      "label": "telegram.js",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/api/telegram.js",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_api_telegram_js",
+      "community": 15,
+      "norm_label": "telegram.js"
+    },
+    {
+      "label": "handler()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/api/telegram.js",
+      "source_location": "L1",
+      "id": "telegram_handler",
+      "community": 15,
+      "norm_label": "handler()"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_vite_config_ts",
+      "_tgt": "vite_config_authmiddleware",
+      "source": "run_media_abhishek_bbc_repos_github_d_vite_config_ts",
+      "target": "vite_config_authmiddleware",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_vite_config_ts",
+      "_tgt": "vite_config_telegrammiddleware",
+      "source": "run_media_abhishek_bbc_repos_github_d_vite_config_ts",
+      "target": "vite_config_telegrammiddleware",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
+      "source_location": "L181",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_vite_config_ts",
+      "_tgt": "vite_config_apiplugin",
+      "source": "run_media_abhishek_bbc_repos_github_d_vite_config_ts",
+      "target": "vite_config_apiplugin",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/main.tsx",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_main_tsx",
+      "_tgt": "run_media_abhishek_bbc_repos_github_d_src_app_tsx",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_main_tsx",
+      "target": "run_media_abhishek_bbc_repos_github_d_src_app_tsx",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/App.tsx",
+      "source_location": "L8",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_app_tsx",
+      "_tgt": "app_app",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_app_tsx",
+      "target": "app_app",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/pages/Dashboard.tsx",
+      "source_location": "L11",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_pages_dashboard_tsx",
+      "_tgt": "dashboard_dashboard",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_pages_dashboard_tsx",
+      "target": "dashboard_dashboard",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/pages/OAuthCallback.tsx",
+      "source_location": "L7",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_pages_oauthcallback_tsx",
+      "_tgt": "oauthcallback_oauthcallback",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_pages_oauthcallback_tsx",
+      "target": "oauthcallback_oauthcallback",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "_tgt": "actionbar_handlebulkaction",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "target": "actionbar_handlebulkaction",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "_tgt": "actionbar_handlemakeprivate",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "target": "actionbar_handlemakeprivate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "_tgt": "actionbar_handlemakepublic",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "target": "actionbar_handlemakepublic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "_tgt": "actionbar_handlearchive",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "target": "actionbar_handlearchive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "_tgt": "actionbar_handleunarchive",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "target": "actionbar_handleunarchive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "_tgt": "actionbar_handledownloadzip",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "target": "actionbar_handledownloadzip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "_tgt": "actionbar_handledelete",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "target": "actionbar_handledelete",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L51",
+      "weight": 1.0,
+      "_src": "actionbar_handlemakeprivate",
+      "_tgt": "actionbar_handlebulkaction",
+      "source": "actionbar_handlebulkaction",
+      "target": "actionbar_handlemakeprivate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L52",
+      "weight": 1.0,
+      "_src": "actionbar_handlemakepublic",
+      "_tgt": "actionbar_handlebulkaction",
+      "source": "actionbar_handlebulkaction",
+      "target": "actionbar_handlemakepublic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L53",
+      "weight": 1.0,
+      "_src": "actionbar_handlearchive",
+      "_tgt": "actionbar_handlebulkaction",
+      "source": "actionbar_handlebulkaction",
+      "target": "actionbar_handlearchive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L54",
+      "weight": 1.0,
+      "_src": "actionbar_handleunarchive",
+      "_tgt": "actionbar_handlebulkaction",
+      "source": "actionbar_handlebulkaction",
+      "target": "actionbar_handleunarchive",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "actionbar_handledownloadzip",
+      "_tgt": "actionbar_handlebulkaction",
+      "source": "actionbar_handlebulkaction",
+      "target": "actionbar_handledownloadzip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L65",
+      "weight": 1.0,
+      "_src": "actionbar_handledelete",
+      "_tgt": "telegram_backuprepototelegram",
+      "source": "actionbar_handledelete",
+      "target": "telegram_backuprepototelegram"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L79",
+      "weight": 1.0,
+      "_src": "actionbar_handledelete",
+      "_tgt": "github_deleterepo",
+      "source": "actionbar_handledelete",
+      "target": "github_deleterepo"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/TelegramSetupBanner.tsx",
+      "source_location": "L17",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_ui_telegramsetupbanner_tsx",
+      "_tgt": "telegramsetupbanner_handledismiss",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_ui_telegramsetupbanner_tsx",
+      "target": "telegramsetupbanner_handledismiss",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/DeleteModal.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_ui_deletemodal_tsx",
+      "_tgt": "deletemodal_copybutton",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_ui_deletemodal_tsx",
+      "target": "deletemodal_copybutton",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/DeleteModal.tsx",
+      "source_location": "L55",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_ui_deletemodal_tsx",
+      "_tgt": "deletemodal_handleclose",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_ui_deletemodal_tsx",
+      "target": "deletemodal_handleclose",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/GithubIcon.tsx",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_ui_githubicon_tsx",
+      "_tgt": "githubicon_githubicon",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_ui_githubicon_tsx",
+      "target": "githubicon_githubicon",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoList.tsx",
+      "source_location": "L16",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_repos_repolist_tsx",
+      "_tgt": "repolist_handleselectall",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_repos_repolist_tsx",
+      "target": "repolist_handleselectall",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoRow.tsx",
+      "source_location": "L15",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_repos_reporow_tsx",
+      "_tgt": "reporow_formatdistancetonow",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_repos_reporow_tsx",
+      "target": "reporow_formatdistancetonow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoRow.tsx",
+      "source_location": "L32",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_repos_reporow_tsx",
+      "_tgt": "reporow_formatsize",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_repos_reporow_tsx",
+      "target": "reporow_formatsize",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoRow.tsx",
+      "source_location": "L37",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_repos_reporow_tsx",
+      "_tgt": "reporow_getlanguagecolor",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_repos_reporow_tsx",
+      "target": "reporow_getlanguagecolor",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoRow.tsx",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_repos_reporow_tsx",
+      "_tgt": "reporow_reporow",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_repos_reporow_tsx",
+      "target": "reporow_reporow",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/auth.ts",
+      "source_location": "L3",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_auth_ts",
+      "_tgt": "auth_loginwithgithub",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_auth_ts",
+      "target": "auth_loginwithgithub",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/utils.ts",
+      "source_location": "L4",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_utils_ts",
+      "_tgt": "utils_cn",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_utils_ts",
+      "target": "utils_cn",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L6",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "_tgt": "github_initgithub",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "target": "github_initgithub",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L10",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "_tgt": "github_getoctokit",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "target": "github_getoctokit",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L33",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "_tgt": "github_fetchallrepos",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "target": "github_fetchallrepos",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L57",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "_tgt": "github_updaterepovisibility",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "target": "github_updaterepovisibility",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L66",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "_tgt": "github_updaterepoarchived",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "target": "github_updaterepoarchived",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L75",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "_tgt": "github_deleterepo",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "target": "github_deleterepo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L83",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "_tgt": "github_downloadrepozip",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "target": "github_downloadrepozip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L34",
+      "weight": 1.0,
+      "_src": "github_fetchallrepos",
+      "_tgt": "github_getoctokit",
+      "source": "github_getoctokit",
+      "target": "github_fetchallrepos",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L58",
+      "weight": 1.0,
+      "_src": "github_updaterepovisibility",
+      "_tgt": "github_getoctokit",
+      "source": "github_getoctokit",
+      "target": "github_updaterepovisibility",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L67",
+      "weight": 1.0,
+      "_src": "github_updaterepoarchived",
+      "_tgt": "github_getoctokit",
+      "source": "github_getoctokit",
+      "target": "github_updaterepoarchived",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L76",
+      "weight": 1.0,
+      "_src": "github_deleterepo",
+      "_tgt": "github_getoctokit",
+      "source": "github_getoctokit",
+      "target": "github_deleterepo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L84",
+      "weight": 1.0,
+      "_src": "github_downloadrepozip",
+      "_tgt": "github_getoctokit",
+      "source": "github_getoctokit",
+      "target": "github_downloadrepozip",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts",
+      "source_location": "L12",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_telegram_ts",
+      "_tgt": "telegram_istelegramconfigured",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_telegram_ts",
+      "target": "telegram_istelegramconfigured",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts",
+      "source_location": "L29",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_telegram_ts",
+      "_tgt": "telegram_backuprepototelegram",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_telegram_ts",
+      "target": "telegram_backuprepototelegram",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/api/auth.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_api_auth_js",
+      "_tgt": "auth_handler",
+      "source": "run_media_abhishek_bbc_repos_github_d_api_auth_js",
+      "target": "auth_handler",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/api/telegram.js",
+      "source_location": "L1",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_api_telegram_js",
+      "_tgt": "telegram_handler",
+      "source": "run_media_abhishek_bbc_repos_github_d_api_telegram_js",
+      "target": "telegram_handler",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": []
+}
