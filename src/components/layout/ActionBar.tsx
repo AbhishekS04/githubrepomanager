@@ -131,8 +131,11 @@ export const ActionBar: React.FC = () => {
               pointerEvents: 'none',
             }}
           >
-            <div style={{ pointerEvents: 'auto' }}>
-            <div style={{ ...pillStyle, display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 10px' }}>
+            <div style={{ pointerEvents: 'auto', maxWidth: 'calc(100vw - 32px)' }}>
+            <div style={{ ...pillStyle, display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 10px', overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+              <style>{`
+                ::-webkit-scrollbar { display: none; }
+              `}</style>
 
               {/* Count badge */}
               <span style={{
@@ -141,7 +144,7 @@ export const ActionBar: React.FC = () => {
                 background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.75)',
                 whiteSpace: 'nowrap',
               }}>
-                {count} selected
+                {count} <span className="hidden sm:inline">selected</span>
               </span>
 
               <div style={divStyle} />
@@ -190,7 +193,7 @@ export const ActionBar: React.FC = () => {
                       }}
                     >
                       {icon}
-                      {label}
+                      <span className="hidden sm:inline">{label}</span>
                     </button>
                   ))}
                 </div>
@@ -215,7 +218,7 @@ export const ActionBar: React.FC = () => {
                 onMouseLeave={e => { e.currentTarget.style.background = 'rgba(225,53,53,0.12)'; }}
               >
                 <Trash2 size={14} />
-                Delete
+                <span className="hidden sm:inline">Delete</span>
               </button>
 
               {/* Dismiss */}

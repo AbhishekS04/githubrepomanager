@@ -110,25 +110,25 @@ export const RepoRow: React.FC<RepoItemProps> = ({ repo, isSelected, onToggle, i
         </div>
       </div>
 
-      <div className="flex items-center gap-4 text-xs text-muted-foreground sm:ml-auto w-full sm:w-auto pl-8 sm:pl-0">
+      <div className="flex flex-wrap items-center gap-y-2 gap-x-4 text-xs text-muted-foreground sm:ml-auto w-full sm:w-auto pl-8 sm:pl-0 mt-2 sm:mt-0">
         {repo.language && (
-          <div className="flex items-center gap-1.5 w-24">
+          <div className="flex items-center gap-1.5 sm:w-24">
             <span className={cn("h-2 w-2 rounded-full", getLanguageColor(repo.language))} />
             <span className="truncate">{repo.language}</span>
           </div>
         )}
         
-        <div className="flex items-center gap-1 w-12">
+        <div className="flex items-center gap-1 sm:w-12">
           <Star className="h-3.5 w-3.5" />
           <span>{repo.stargazers_count}</span>
         </div>
         
-        <div className="flex items-center gap-1 w-20">
+        <div className="flex items-center gap-1 sm:w-20">
           <HardDrive className="h-3.5 w-3.5" />
           <span>{formatSize(repo.size)}</span>
         </div>
         
-        <div className="flex items-center gap-1 w-24 whitespace-nowrap">
+        <div className="flex items-center gap-1 sm:w-24 whitespace-nowrap">
           <Clock className="h-3.5 w-3.5" />
           <span>{formatDistanceToNow(repo.updated_at)}</span>
         </div>
