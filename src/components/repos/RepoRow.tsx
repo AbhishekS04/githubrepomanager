@@ -4,6 +4,7 @@ import { Checkbox } from '../ui/Checkbox';
 import { Lock, Unlock, Archive, GitFork, Star, HardDrive, Clock } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { motion } from 'framer-motion';
+import { useAuthStore } from '../../store/authStore';
 
 interface RepoItemProps {
   repo: Repo;
@@ -55,6 +56,9 @@ const getLanguageColor = (lang: string | null) => {
 };
 
 export const RepoRow: React.FC<RepoItemProps> = ({ repo, isSelected, onToggle, index }) => {
+  const { user } = useAuthStore();
+  const isContribution = repo.owner.login !== user?.login;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 10 }}
@@ -77,6 +81,11 @@ export const RepoRow: React.FC<RepoItemProps> = ({ repo, isSelected, onToggle, i
           <div className="flex items-center gap-2 flex-wrap">
             <h3 className="font-mono font-medium text-base truncate text-foreground/90 group-hover:text-primary transition-colors">
               {repo.name}
+              {isContribution && (
+                <span className="ml-2 text-xs font-normal text-muted-foreground">
+                  by {repo.owner.login}
+                </span>
+              )}
             </h3>
             
             {repo.private ? (
@@ -138,6 +147,8 @@ export const RepoRow: React.FC<RepoItemProps> = ({ repo, isSelected, onToggle, i
 };
 
 export const RepoCard: React.FC<RepoItemProps> = ({ repo, isSelected, onToggle, index }) => {
+  const { user } = useAuthStore();
+  
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.95 }}
@@ -158,7 +169,13 @@ export const RepoCard: React.FC<RepoItemProps> = ({ repo, isSelected, onToggle, 
       <div className="flex flex-col gap-2 pr-8">
         <h3 className="font-mono font-medium text-base truncate text-foreground/90 group-hover:text-primary transition-colors">
           {repo.name}
+          {repo.owner.login !== user?.login && (
+            <span className="block text-[10px] font-normal text-muted-foreground mt-0.5">
+              by {repo.owner.login}
+            </span>
+          )}
         </h3>
+      </div>
         
         <div className="flex flex-wrap gap-1.5">
           {repo.private ? (
@@ -183,7 +200,6 @@ export const RepoCard: React.FC<RepoItemProps> = ({ repo, isSelected, onToggle, 
             </span>
           )}
         </div>
-      </div>
 
       {repo.description && (
         <p className="text-xs text-muted-foreground line-clamp-2 mt-auto">

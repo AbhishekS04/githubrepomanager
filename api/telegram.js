@@ -10,17 +10,9 @@ export default async function handler(req, res) {
     return res.status(503).json({ ok: false, error: 'Telegram is not configured on this server.' });
   }
 
-  let body = '';
-  for await (const chunk of req) body += chunk;
-
-  let payload;
-  try {
-    payload = JSON.parse(body);
-  } catch {
-    return res.status(400).json({ ok: false, error: 'Invalid JSON body' });
-  }
-
-  const { owner, repo, token, meta } = payload;
+  // Vercel pre-parses the body if it's JSON
+  const payload = req.body || (typeof req === 'string' ? JSON.parse(req) : req);
+  const { owner, repo, token, meta, mode = 'delete' } = payload;
 
   if (!owner || !repo || !token) {
     return res.status(400).json({ ok: false, error: 'Missing owner, repo, or token' });
@@ -66,8 +58,10 @@ export default async function handler(req, res) {
       ? `${fileSizeMb} MB`
       : `${Math.round(zipBuffer.byteLength / 1024)} KB`;
 
+    const dateStr = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+    
     const caption = [
-      `🗂 *${meta?.fullName || `${owner}/${repo}`}*`,
+      mode === 'delete' ? `🗑 *DELETED: ${meta?.fullName || `${owner}/${repo}`}*` : `📦 *BACKUP: ${meta?.fullName || `${owner}/${repo}`}*`,
       meta?.description ? `📝 ${meta.description}` : null,
       ``,
       `🔒 Visibility: ${meta?.isPrivate ? 'Private' : 'Public'}`,
@@ -76,8 +70,8 @@ export default async function handler(req, res) {
       `💾 Size: ${sizeDisplay}`,
       `🌿 Branch: ${defaultBranch}`,
       ``,
-      `🗑 Deleted on: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST`,
-      `🤖 Backed up by RepoManager`,
+      mode === 'delete' ? `❌ Removed on: ${dateStr} IST` : `✅ Backed up on: ${dateStr} IST`,
+      `🤖 Powered by GitSweep`,
     ].filter(Boolean).join('\n');
 
     // Step 4: Upload to Telegram (50MB bot API limit)

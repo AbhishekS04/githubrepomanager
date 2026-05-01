@@ -2,7 +2,8 @@ import React from 'react';
 import { RepoRow, RepoCard } from './RepoRow';
 import type { Repo } from '../../lib/github';
 import { useSelectionStore } from '../../store/selectionStore';
-import { CheckSquare } from 'lucide-react';
+import { useAuthStore } from '../../store/authStore';
+import { CheckSquare, ChevronRight } from 'lucide-react';
 import { Button } from '../ui/Button';
 
 interface RepoListProps {
@@ -11,13 +12,20 @@ interface RepoListProps {
 }
 
 export const RepoList: React.FC<RepoListProps> = ({ repos, isLoading }) => {
-  const { selectedIds, toggleSelection, selectAll, deselectAll, viewMode } = useSelectionStore();
+  const { selectedIds, toggleSelection, viewMode } = useSelectionStore();
+  const { user } = useAuthStore();
 
-  const handleSelectAll = () => {
-    if (selectedIds.size === repos.length && repos.length > 0) {
-      deselectAll();
+  const handleSelectAll = (reposToSelect: Repo[]) => {
+    const allSelected = reposToSelect.every(r => selectedIds.has(r.id));
+    if (allSelected) {
+      const idsToRemove = reposToSelect.map(r => r.id);
+      idsToRemove.forEach(id => {
+        if (selectedIds.has(id)) toggleSelection(id);
+      });
     } else {
-      selectAll(repos.map(r => r.id));
+      reposToSelect.forEach(r => {
+        if (!selectedIds.has(r.id)) toggleSelection(r.id);
+      });
     }
   };
 
@@ -45,47 +53,68 @@ export const RepoList: React.FC<RepoListProps> = ({ repos, isLoading }) => {
     );
   }
 
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between pb-2">
-        <Button 
-          variant="ghost" 
-          size="sm" 
-          onClick={handleSelectAll}
-          className="text-xs -ml-2 text-muted-foreground"
-        >
-          {selectedIds.size === repos.length ? 'Deselect All' : 'Select All'}
-        </Button>
-        <span className="text-xs text-muted-foreground">
-          Showing {repos.length} repositories
-        </span>
-      </div>
+  // Grouping logic
+  const ownedRepos = repos.filter(r => r.owner.login === user?.login && !r.fork);
+  const forkedRepos = repos.filter(r => r.owner.login === user?.login && r.fork);
+  const contributionRepos = repos.filter(r => r.owner.login !== user?.login);
 
-      {viewMode === 'list' ? (
-        <div className="flex flex-col gap-2">
-          {repos.map((repo, index) => (
-            <RepoRow 
-              key={repo.id} 
-              repo={repo} 
-              isSelected={selectedIds.has(repo.id)} 
-              onToggle={toggleSelection}
-              index={index}
-            />
-          ))}
+  const sections = [
+    { title: 'My Repositories', repos: ownedRepos },
+    { title: 'Forked Repositories', repos: forkedRepos },
+    { title: 'Contributions', repos: contributionRepos },
+  ].filter(s => s.repos.length > 0);
+
+  return (
+    <div className="space-y-12">
+      {sections.map((section) => (
+        <div key={section.title} className="space-y-4">
+          <div className="flex items-center justify-between border-b border-border/40 pb-2">
+            <div className="flex items-center gap-2">
+              <ChevronRight className="h-4 w-4 text-primary" />
+              <h2 className="text-sm font-semibold tracking-tight text-foreground/80 uppercase">
+                {section.title}
+                <span className="ml-2 text-xs font-normal text-muted-foreground lowercase">
+                  ({section.repos.length})
+                </span>
+              </h2>
+            </div>
+            <Button 
+              variant="ghost" 
+              size="sm" 
+              onClick={() => handleSelectAll(section.repos)}
+              className="h-7 px-2 text-[10px] text-muted-foreground hover:text-foreground"
+            >
+              {section.repos.every(r => selectedIds.has(r.id)) ? 'Deselect Section' : 'Select Section'}
+            </Button>
+          </div>
+
+          {viewMode === 'list' ? (
+            <div className="flex flex-col gap-2">
+              {section.repos.map((repo, index) => (
+                <RepoRow 
+                  key={repo.id} 
+                  repo={repo} 
+                  isSelected={selectedIds.has(repo.id)} 
+                  onToggle={toggleSelection}
+                  index={index}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              {section.repos.map((repo, index) => (
+                <RepoCard 
+                  key={repo.id} 
+                  repo={repo} 
+                  isSelected={selectedIds.has(repo.id)} 
+                  onToggle={toggleSelection}
+                  index={index}
+                />
+              ))}
+            </div>
+          )}
         </div>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {repos.map((repo, index) => (
-            <RepoCard 
-              key={repo.id} 
-              repo={repo} 
-              isSelected={selectedIds.has(repo.id)} 
-              onToggle={toggleSelection}
-              index={index}
-            />
-          ))}
-        </div>
-      )}
+      ))}
       
       {/* Spacer for bottom action bar */}
       <div className="h-24" />

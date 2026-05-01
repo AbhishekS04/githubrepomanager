@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSelectionStore } from '../../store/selectionStore';
 import { useRepoStore } from '../../store/repoStore';
+import { useAuthStore } from '../../store/authStore';
 import {
   Download, Lock, Unlock, Archive, ArchiveRestore,
   Trash2, X, Send,
@@ -21,6 +22,7 @@ type BackupWarning = { repo: Repo; error: string };
 export const ActionBar: React.FC = () => {
   const { selectedIds, deselectAll } = useSelectionStore();
   const { repos, updateRepoLocally, removeReposLocally } = useRepoStore();
+  const { user } = useAuthStore();
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState<Progress | null>(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
@@ -52,20 +54,56 @@ export const ActionBar: React.FC = () => {
   const handleMakePublic   = () => handleBulkAction('action', (o,r) => updateRepoVisibility(o,r,false), id => updateRepoLocally(id, { private: false }));
   const handleArchive      = () => handleBulkAction('action', (o,r) => updateRepoArchived(o,r,true),    id => updateRepoLocally(id, { archived: true }));
   const handleUnarchive    = () => handleBulkAction('action', (o,r) => updateRepoArchived(o,r,false),   id => updateRepoLocally(id, { archived: false }));
-  const handleDownloadZip  = () => handleBulkAction('action', (o,r) => downloadRepoZip(o,r));
+  const handleDownloadZip  = async () => {
+    setIsProcessing(true);
+    setProgress({ current: 0, total: selectedRepos.length, step: 'backup' });
+    
+    for (let i = 0; i < selectedRepos.length; i++) {
+      const repo = selectedRepos[i];
+      setProgress({ current: i + 1, total: selectedRepos.length, step: 'backup', repoName: repo.name });
+      
+      // 1. Trigger Browser Download
+      try {
+        await downloadRepoZip(repo.owner.login, repo.name, repo.default_branch);
+      } catch (e) {
+        console.error('Local download failed', e);
+      }
+
+      // 2. Trigger Telegram Backup
+      try {
+        await backupRepoToTelegram(repo.owner.login, repo.name, {
+          fullName: repo.full_name, 
+          description: repo.description,
+          isPrivate: repo.private, 
+          language: repo.language, 
+          stars: repo.stargazers_count,
+        }, 'backup');
+      } catch (e) {
+        console.error('Telegram backup failed', e);
+      }
+    }
+
+    setIsProcessing(false);
+    setProgress(null);
+    deselectAll();
+  };
 
   const handleDelete = async (shouldBackup: boolean) => {
     setDeleteModalOpen(false);
     setIsProcessing(true);
+    
+    // Only allow deleting repos where the user is the owner
+    const deletableRepos = selectedRepos.filter(r => r.owner.login === user?.login);
     const idsToRemove: number[] = [];
-    for (let i = 0; i < selectedRepos.length; i++) {
-      const repo = selectedRepos[i];
+    
+    for (let i = 0; i < deletableRepos.length; i++) {
+      const repo = deletableRepos[i];
       if (shouldBackup) {
-        setProgress({ current: i + 1, total: selectedRepos.length, step: 'backup', repoName: repo.name });
+        setProgress({ current: i + 1, total: deletableRepos.length, step: 'backup', repoName: repo.name });
         const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
           fullName: repo.full_name, description: repo.description,
           isPrivate: repo.private, language: repo.language, stars: repo.stargazers_count,
-        });
+        }, 'delete');
         if (!result.ok) {
           const go = await new Promise<boolean>(resolve => {
             setBackupWarning({ repo, error: result.error || 'Unknown error' });
@@ -75,7 +113,7 @@ export const ActionBar: React.FC = () => {
           if (!go) continue;
         }
       }
-      setProgress({ current: i + 1, total: selectedRepos.length, step: 'delete', repoName: repo.name });
+      setProgress({ current: i + 1, total: deletableRepos.length, step: 'delete', repoName: repo.name });
       try { await deleteRepo(repo.owner.login, repo.name); idsToRemove.push(repo.id); }
       catch (e) { console.error(e); }
     }
@@ -95,6 +133,9 @@ export const ActionBar: React.FC = () => {
     { label: 'Unarchive', icon: <ArchiveRestore size={14} />, fn: handleUnarchive },
     { label: 'ZIP',       icon: <Download size={14} />,       fn: handleDownloadZip },
   ];
+
+  const hasNonOwnedSelected = selectedRepos.some(r => r.owner.login !== user?.login);
+  const deletableCount = selectedRepos.filter(r => r.owner.login === user?.login).length;
 
   /* shared pill style — matches the floating nav */
   const pillStyle: React.CSSProperties = {
@@ -138,14 +179,21 @@ export const ActionBar: React.FC = () => {
               `}</style>
 
               {/* Count badge */}
-              <span style={{
-                padding: '3px 10px', borderRadius: '9999px', fontSize: '12px',
-                fontWeight: 600, fontFamily: 'JetBrains Mono, monospace',
-                background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.75)',
-                whiteSpace: 'nowrap',
-              }}>
-                {count} <span className="hidden sm:inline">selected</span>
-              </span>
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                <span style={{
+                  padding: '3px 10px', borderRadius: '9999px', fontSize: '11px',
+                  fontWeight: 600, fontFamily: 'JetBrains Mono, monospace',
+                  background: 'rgba(255,255,255,0.08)', color: 'rgba(255,255,255,0.75)',
+                  whiteSpace: 'nowrap',
+                }}>
+                  {count} <span className="hidden sm:inline">selected</span>
+                </span>
+                {hasNonOwnedSelected && (
+                  <span style={{ fontSize: '9px', color: '#eab308', paddingLeft: '8px', marginTop: '-2px' }}>
+                    {deletableCount === 0 ? 'Cannot delete contributions' : 'Contributions filtered from delete'}
+                  </span>
+                )}
+              </div>
 
               <div style={divStyle} />
 
@@ -204,18 +252,20 @@ export const ActionBar: React.FC = () => {
               {/* Delete */}
               <button
                 onClick={() => setDeleteModalOpen(true)}
-                disabled={isProcessing}
-                title="Delete selected"
+                disabled={isProcessing || deletableCount === 0}
+                title={deletableCount === 0 ? "Cannot delete contribution repositories" : "Delete selected"}
                 style={{
                   display: 'flex', alignItems: 'center', gap: '5px',
                   padding: '5px 12px', borderRadius: '9999px',
-                  background: 'rgba(225,53,53,0.12)', border: '1px solid rgba(225,53,53,0.2)',
-                  color: '#e13535', fontSize: '12px', fontWeight: 500,
-                  cursor: 'pointer', whiteSpace: 'nowrap',
+                  background: deletableCount === 0 ? 'rgba(255,255,255,0.05)' : 'rgba(225,53,53,0.12)', 
+                  border: deletableCount === 0 ? '1px solid rgba(255,255,255,0.1)' : '1px solid rgba(225,53,53,0.2)',
+                  color: deletableCount === 0 ? 'rgba(255,255,255,0.2)' : '#e13535', 
+                  fontSize: '12px', fontWeight: 600,
+                  cursor: deletableCount === 0 ? 'not-allowed' : 'pointer', whiteSpace: 'nowrap',
                   transition: 'background 0.15s',
                 }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(225,53,53,0.22)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(225,53,53,0.12)'; }}
+                onMouseEnter={e => { if (deletableCount > 0) e.currentTarget.style.background = 'rgba(225,53,53,0.22)'; }}
+                onMouseLeave={e => { if (deletableCount > 0) e.currentTarget.style.background = 'rgba(225,53,53,0.12)'; }}
               >
                 <Trash2 size={14} />
                 <span className="hidden sm:inline">Delete</span>

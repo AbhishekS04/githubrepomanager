@@ -70,7 +70,7 @@ const telegramMiddleware = (env: Record<string, string>) =>
       const chunks: Buffer[] = [];
       for await (const chunk of req) chunks.push(chunk as Buffer);
       const body = JSON.parse(Buffer.concat(chunks).toString());
-      const { owner, repo, token, meta } = body;
+      const { owner, repo, token, meta, mode = 'delete' } = body;
 
       if (!owner || !repo || !token) {
         res.statusCode = 400;
@@ -130,8 +130,10 @@ const telegramMiddleware = (env: Record<string, string>) =>
         ? `${fileSizeMb} MB`
         : `${Math.round(zipBuffer.byteLength / 1024)} KB`;
 
+      const dateStr = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
+
       const caption = [
-        `🗂 *${meta?.fullName || `${owner}/${repo}`}*`,
+        mode === 'delete' ? `🗑 *DELETED: ${meta?.fullName || `${owner}/${repo}`}*` : `📦 *BACKUP: ${meta?.fullName || `${owner}/${repo}`}*`,
         meta?.description ? `📝 ${meta.description}` : null,
         '',
         `🔒 Visibility: ${meta?.isPrivate ? 'Private' : 'Public'}`,
@@ -140,8 +142,8 @@ const telegramMiddleware = (env: Record<string, string>) =>
         `💾 Size: ${sizeDisplay}`,
         `🌿 Branch: ${defaultBranch}`,
         '',
-        `🗑 Deleted on: ${new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })} IST`,
-        `🤖 Backed up by RepoManager`,
+        mode === 'delete' ? `❌ Removed on: ${dateStr} IST` : `✅ Backed up on: ${dateStr} IST`,
+        `🤖 Powered by GitSweep`,
       ].filter(Boolean).join('\n');
 
       // Step 4: Upload to Telegram
@@ -176,6 +178,49 @@ const telegramMiddleware = (env: Record<string, string>) =>
   };
 
 // --------------------------------------------------------------------------
+// Download middleware – proxies zip downloads from GitHub locally
+// --------------------------------------------------------------------------
+const downloadMiddleware = () =>
+  async (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+    if (req.method !== 'POST') return next();
+
+    try {
+      // Read JSON body
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) chunks.push(chunk as Buffer);
+      const body = JSON.parse(Buffer.concat(chunks).toString());
+      const { owner, repo, token, branch = 'main' } = body;
+
+      if (!owner || !repo || !token) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ error: 'Missing owner, repo, or token' }));
+        return;
+      }
+
+      const zipUrl = `https://api.github.com/repos/${owner}/${repo}/zipball/${branch}`;
+      const response = await fetch(zipUrl, {
+        headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+        redirect: 'follow',
+      });
+
+      if (!response.ok) {
+        res.statusCode = response.status;
+        res.end(JSON.stringify({ error: `GitHub download failed: ${response.statusText}` }));
+        return;
+      }
+
+      res.setHeader('Content-Type', 'application/zip');
+      res.setHeader('Content-Disposition', `attachment; filename="${repo}-${branch}.zip"`);
+      
+      const arrayBuffer = await response.arrayBuffer();
+      res.end(Buffer.from(arrayBuffer));
+    } catch (error) {
+      res.statusCode = 500;
+      res.end(JSON.stringify({ error: 'Internal server error' }));
+    }
+  };
+
+// --------------------------------------------------------------------------
 // Vite plugin that wires both middlewares into the dev server
 // --------------------------------------------------------------------------
 const apiPlugin = (env: Record<string, string>) => ({
@@ -183,6 +228,7 @@ const apiPlugin = (env: Record<string, string>) => ({
   configureServer(server: { middlewares: { use: (path: string, fn: any) => void } }) {
     server.middlewares.use('/api/auth', authMiddleware(env));
     server.middlewares.use('/api/telegram', telegramMiddleware(env));
+    server.middlewares.use('/api/download', downloadMiddleware());
   },
 });
 

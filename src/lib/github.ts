@@ -1,5 +1,6 @@
 import { Octokit } from 'octokit';
 import { saveAs } from 'file-saver';
+import { useAuthStore } from '../store/authStore';
 
 let octokit: Octokit | null = null;
 
@@ -39,7 +40,7 @@ export const fetchAllRepos = async (): Promise<Repo[]> => {
   while (true) {
     const response = await client.rest.repos.listForAuthenticatedUser({
       visibility: 'all',
-      affiliation: 'owner',
+      affiliation: 'owner,collaborator,organization_member',
       per_page,
       page,
       sort: 'updated',
@@ -81,19 +82,22 @@ export const deleteRepo = async (owner: string, repo: string) => {
 };
 
 export const downloadRepoZip = async (owner: string, repo: string, defaultBranch: string = 'main') => {
-  const client = getOctokit();
+  const token = useAuthStore.getState().token;
+  if (!token) return;
+
   try {
-    const response = await client.rest.repos.downloadZipballArchive({
-      owner,
-      repo,
-      ref: defaultBranch,
+    const response = await fetch('/api/download', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ owner, repo, token, branch: defaultBranch }),
     });
-    
-    // Octokit returns an ArrayBuffer for this endpoint
-    const blob = new Blob([response.data as unknown as BlobPart], { type: 'application/zip' });
+
+    if (!response.ok) throw new Error(`Download failed: ${response.statusText}`);
+
+    const blob = await response.blob();
     saveAs(blob, `${repo}-${defaultBranch}.zip`);
   } catch (error) {
-    console.error(`Failed to download ${repo}`, error);
+    console.error('Download error:', error);
     throw error;
   }
 };

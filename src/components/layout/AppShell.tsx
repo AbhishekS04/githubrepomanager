@@ -23,7 +23,7 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
               <GithubIcon className="h-4 w-4 text-white" />
             </div>
             <span className="text-sm font-semibold tracking-tight font-mono text-white/90">
-              RepoManager
+              GitSweep
             </span>
           </div>
 

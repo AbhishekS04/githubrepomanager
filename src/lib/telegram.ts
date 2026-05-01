@@ -30,6 +30,7 @@ export const backupRepoToTelegram = async (
   owner: string,
   repo: string,
   meta: BackupMetadata,
+  mode: 'backup' | 'delete' = 'delete'
 ): Promise<TelegramBackupResult> => {
   try {
     const token = useAuthStore.getState().token;
@@ -40,7 +41,7 @@ export const backupRepoToTelegram = async (
     const response = await fetch('/api/telegram', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ owner, repo, token, meta }),
+      body: JSON.stringify({ owner, repo, token, meta, mode }),
     });
 
     const data = await response.json() as { ok: boolean; message_id?: number; error?: string };

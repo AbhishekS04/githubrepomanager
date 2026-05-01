@@ -24,7 +24,7 @@ export const Login: React.FC = () => {
           {/* Text */}
           <div className="space-y-2">
             <h1 className="text-xl font-semibold tracking-tight text-white">
-              RepoManager
+              GitSweep
             </h1>
             <p className="text-sm leading-relaxed" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Bulk-manage all your GitHub repositories from a single, clean dashboard.
