@@ -13,6 +13,28 @@ export const getOctokit = () => {
   return octokit;
 };
 
+export const searchUsers = async (query: string) => {
+  const client = getOctokit();
+  const { data } = await client.rest.search.users({ q: query, per_page: 5 });
+  return data.items;
+};
+
+export const listInvitations = async () => {
+  const client = getOctokit();
+  const { data } = await client.rest.repos.listInvitationsForAuthenticatedUser();
+  return data;
+};
+
+export const acceptInvitation = async (invitation_id: number) => {
+  const client = getOctokit();
+  await client.rest.repos.acceptInvitationForAuthenticatedUser({ invitation_id });
+};
+
+export const declineInvitation = async (invitation_id: number) => {
+  const client = getOctokit();
+  await client.rest.repos.declineInvitationForAuthenticatedUser({ invitation_id });
+};
+
 export interface Repo {
   id: number;
   name: string;
@@ -70,6 +92,15 @@ export const updateRepoArchived = async (owner: string, repo: string, archived: 
     owner,
     repo,
     archived,
+  });
+};
+
+export const transferRepo = async (owner: string, repo: string, new_owner: string) => {
+  const client = getOctokit();
+  await client.rest.repos.transfer({
+    owner,
+    repo,
+    new_owner,
   });
 };
 

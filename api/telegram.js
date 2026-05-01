@@ -62,10 +62,12 @@ export default async function handler(req, res) {
     
     const header = mode === 'delete' ? `🗑 *DELETED: ${meta?.fullName || `${owner}/${repo}`}*` 
                  : mode === 'leave'  ? `🤝 *CONTRIBUTION: ${meta?.fullName || `${owner}/${repo}`}*`
+                 : mode === 'transfer' ? `📤 *TRANSFER: ${meta?.fullName || `${owner}/${repo}`}*`
                  : `📦 *BACKUP: ${meta?.fullName || `${owner}/${repo}`}*`;
 
     const footer = mode === 'delete' ? `❌ Removed on: ${dateStr} IST`
                  : mode === 'leave'  ? `✅ Left on: ${dateStr} IST`
+                 : mode === 'transfer' ? `✅ Transfer initiated on: ${dateStr} IST`
                  : `✅ Backed up on: ${dateStr} IST`;
 
     const caption = [

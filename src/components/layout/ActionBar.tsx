@@ -9,12 +9,13 @@ import {
 } from '../../lib/github';
 import {
   Download, Lock, Unlock, Archive, ArchiveRestore,
-  Trash2, X, Send, LogOut,
+  Trash2, X, Send, LogOut, Share2,
 } from 'lucide-react';
 import { backupRepoToTelegram } from '../../lib/telegram';
 import { DeleteModal } from '../ui/DeleteModal';
 import { LeaveModal } from '../ui/LeaveModal';
-import type { Repo } from '../../lib/github';
+import { TransferModal } from '../ui/TransferModal';
+import { transferRepo, type Repo } from '../../lib/github';
 
 type ProgressStep = 'backup' | 'delete' | 'action';
 interface Progress { current: number; total: number; step: ProgressStep; repoName?: string; }
@@ -28,6 +29,7 @@ export const ActionBar: React.FC = () => {
   const [progress, setProgress] = useState<Progress | null>(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [leaveModalOpen, setLeaveModalOpen] = useState(false);
+  const [transferModalOpen, setTransferModalOpen] = useState(false);
   const [backupWarning, setBackupWarning] = useState<BackupWarning | null>(null);
   const [skipBackupForCurrent, setSkipBackupForCurrent] = useState<((v: boolean) => void) | null>(null);
 
@@ -168,6 +170,49 @@ export const ActionBar: React.FC = () => {
     deselectAll();
   };
 
+  const handleTransfer = async (newOwner: string, shouldBackup: boolean) => {
+    if (!user) return;
+    setTransferModalOpen(false);
+    setIsProcessing(true);
+    
+    // Only target repos the user owns
+    const ownRepos = selectedRepos.filter(r => r.owner.login === user.login);
+    const idsToRemove: number[] = [];
+    
+    for (let i = 0; i < ownRepos.length; i++) {
+      const repo = ownRepos[i];
+      
+      if (shouldBackup) {
+        setProgress({ current: i + 1, total: ownRepos.length, step: 'backup', repoName: repo.name });
+        const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
+          fullName: repo.full_name, description: repo.description,
+          isPrivate: repo.private, language: repo.language, stars: repo.stargazers_count,
+        }, 'transfer');
+        
+        if (!result.ok) {
+          const go = await new Promise<boolean>(resolve => {
+            setBackupWarning({ repo, error: result.error || 'Unknown error' });
+            setSkipBackupForCurrent(() => resolve);
+          });
+          setBackupWarning(null); setSkipBackupForCurrent(null);
+          if (!go) continue;
+        }
+      }
+
+      setProgress({ current: i + 1, total: ownRepos.length, step: 'action', repoName: repo.name });
+      try { 
+        await transferRepo(repo.owner.login, repo.name, newOwner); 
+        idsToRemove.push(repo.id); 
+      }
+      catch (e) { console.error(e); }
+    }
+    
+    removeReposLocally(idsToRemove);
+    setIsProcessing(false);
+    setProgress(null);
+    deselectAll();
+  };
+
   const progressBg = progress?.step === 'backup' ? '#3b82f6' : progress?.step === 'delete' ? '#e13535' : 'rgba(255,255,255,0.5)';
   const progressLabel = progress?.step === 'backup' ? 'Backing up' : progress?.step === 'delete' ? 'Deleting' : 'Processing';
 
@@ -180,6 +225,7 @@ export const ActionBar: React.FC = () => {
   ];
 
   const hasNonOwnedSelected = selectedRepos.some(r => r.owner.login !== user?.login);
+  const hasOwnedSelected = selectedRepos.some(r => r.owner.login === user?.login);
   const deletableCount = selectedRepos.filter(r => r.owner.login === user?.login).length;
 
   /* shared pill style — matches the floating nav */
@@ -316,6 +362,25 @@ export const ActionBar: React.FC = () => {
                 <span className="hidden sm:inline">Delete</span>
               </button>
 
+              {/* Transfer */}
+              {hasOwnedSelected && (
+                <button
+                  onClick={() => setTransferModalOpen(true)}
+                  disabled={isProcessing}
+                  title="Transfer selected repositories"
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '8px',
+                    padding: '0 16px', height: '40px', borderRadius: '12px',
+                    background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.2)',
+                    color: '#a78bfa', fontSize: '13px', fontWeight: 500,
+                    cursor: 'pointer', transition: 'all 0.2s',
+                  }}
+                >
+                  <Share2 size={16} />
+                  <span>Transfer</span>
+                </button>
+              )}
+
               {/* Leave */}
               {hasNonOwnedSelected && (
                 <button
@@ -423,6 +488,15 @@ export const ActionBar: React.FC = () => {
         onClose={() => setLeaveModalOpen(false)}
         onConfirm={handleLeave}
         repoCount={selectedRepos.filter(r => r.owner.login !== user?.login).length}
+        isProcessing={isProcessing}
+      />
+
+      {/* ─── Transfer Modal ──────────────────────────────────── */}
+      <TransferModal
+        isOpen={transferModalOpen}
+        onClose={() => setTransferModalOpen(false)}
+        onConfirm={handleTransfer}
+        repoCount={selectedRepos.filter(r => r.owner.login === user?.login).length}
         isProcessing={isProcessing}
       />
     </>

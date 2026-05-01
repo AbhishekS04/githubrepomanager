@@ -4,6 +4,8 @@ import { LogOut } from 'lucide-react';
 import { GithubIcon } from '../ui/GithubIcon';
 import { motion } from 'framer-motion';
 
+import { NotificationBell } from './NotificationBell';
+
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, logout } = useAuthStore();
 
@@ -27,9 +29,10 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
             </span>
           </div>
 
-          {/* User info + logout */}
+          {/* User info + Notifications + logout */}
           {user && (
             <div className="flex items-center gap-3">
+              <NotificationBell />
               <div className="flex items-center gap-2">
                 <img
                   src={user.avatar_url}
