@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { fetchAllRepos } from '../lib/github';
 import type { Repo } from '../lib/github';
+import { toast } from 'sonner';
 
 interface RepoState {
   repos: Repo[];
@@ -21,6 +22,7 @@ export const useRepoStore = create<RepoState>((set) => ({
       const repos = await fetchAllRepos();
       set({ repos, loading: false });
     } catch (err: any) {
+      toast.error('Sync failed', { description: err.message || 'Could not fetch repositories from GitHub.' });
       set({ error: err.message || 'Failed to fetch repositories', loading: false });
     }
   },

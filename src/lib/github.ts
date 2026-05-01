@@ -35,6 +35,15 @@ export const declineInvitation = async (invitation_id: number) => {
   await client.rest.repos.declineInvitationForAuthenticatedUser({ invitation_id });
 };
 
+export const fetchUserEvents = async (username: string) => {
+  const client = getOctokit();
+  const { data } = await client.rest.activity.listPublicEventsForUser({
+    username,
+    per_page: 20,
+  });
+  return data;
+};
+
 export interface Repo {
   id: number;
   name: string;

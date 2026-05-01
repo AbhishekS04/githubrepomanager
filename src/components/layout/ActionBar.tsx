@@ -11,11 +11,13 @@ import {
   Download, Lock, Unlock, Archive, ArchiveRestore,
   Trash2, X, Send, LogOut, Share2,
 } from 'lucide-react';
-import { backupRepoToTelegram } from '../../lib/telegram';
+import { backupRepoToTelegram, type TelegramBackupResult } from '../../lib/telegram';
 import { DeleteModal } from '../ui/DeleteModal';
 import { LeaveModal } from '../ui/LeaveModal';
 import { TransferModal } from '../ui/TransferModal';
 import { transferRepo, type Repo } from '../../lib/github';
+import { useBackupStore } from '../../store/backupStore';
+import { toast } from 'sonner';
 
 type ProgressStep = 'backup' | 'delete' | 'action';
 interface Progress { current: number; total: number; step: ProgressStep; repoName?: string; }
@@ -32,6 +34,7 @@ export const ActionBar: React.FC = () => {
   const [transferModalOpen, setTransferModalOpen] = useState(false);
   const [backupWarning, setBackupWarning] = useState<BackupWarning | null>(null);
   const [skipBackupForCurrent, setSkipBackupForCurrent] = useState<((v: boolean) => void) | null>(null);
+  const { addLog, logs } = useBackupStore();
 
   const selectedRepos = repos.filter(r => selectedIds.has(r.id));
   const count = selectedIds.size;
@@ -43,11 +46,21 @@ export const ActionBar: React.FC = () => {
   ) => {
     setIsProcessing(true);
     setProgress({ current: 0, total: count, step });
+    let successCount = 0;
     for (let i = 0; i < selectedRepos.length; i++) {
       const repo = selectedRepos[i];
-      try { await fn(repo.owner.login, repo.name); if (localFn) localFn(repo.id); }
-      catch (e) { console.error(e); }
+      try { 
+        await fn(repo.owner.login, repo.name); 
+        if (localFn) localFn(repo.id); 
+        successCount++;
+      }
+      catch (e) { 
+        toast.error(`Failed: ${repo.name}`, { description: (e as any).message });
+      }
       setProgress({ current: i + 1, total: count, step, repoName: repo.name });
+    }
+    if (successCount > 0) {
+      toast.success(`Updated ${successCount} repositories`);
     }
     setIsProcessing(false);
     setProgress(null);
@@ -62,6 +75,7 @@ export const ActionBar: React.FC = () => {
     setIsProcessing(true);
     setProgress({ current: 0, total: selectedRepos.length, step: 'backup' });
     
+    let successCount = 0;
     for (let i = 0; i < selectedRepos.length; i++) {
       const repo = selectedRepos[i];
       setProgress({ current: i + 1, total: selectedRepos.length, step: 'backup', repoName: repo.name });
@@ -70,23 +84,47 @@ export const ActionBar: React.FC = () => {
       try {
         await downloadRepoZip(repo.owner.login, repo.name, repo.default_branch);
       } catch (e) {
-        console.error('Local download failed', e);
+        toast.error(`Local download failed: ${repo.name}`);
       }
 
-      // 2. Trigger Telegram Backup
+      const existing = logs.find(l => 
+        (l.repoFullName.toLowerCase() === repo.full_name.toLowerCase() || 
+         (l.repoName.toLowerCase() === repo.name.toLowerCase() && l.owner.toLowerCase() === repo.owner.login.toLowerCase()))
+        && l.fileId
+      );
+
+      if (existing) {
+        toast.warning('Already Backed Up', { description: `${repo.name} already has a backup in Telegram.` });
+        successCount++;
+        continue;
+      }
+
       try {
-        await backupRepoToTelegram(repo.owner.login, repo.name, {
+        const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
           fullName: repo.full_name, 
           description: repo.description,
           isPrivate: repo.private, 
           language: repo.language, 
           stars: repo.stargazers_count,
         }, 'backup');
+        if (result.ok) {
+          successCount++;
+          addLog({
+            repoName: repo.name, repoFullName: repo.full_name, owner: repo.owner.login,
+            action: 'manual', status: 'success',
+            fileId: result.fileId
+          });
+        } else {
+          toast.error(`Telegram backup failed: ${repo.name}`, { description: result.error });
+        }
       } catch (e) {
-        console.error('Telegram backup failed', e);
+        toast.error(`Backup error: ${repo.name}`);
       }
     }
 
+    if (successCount > 0) {
+      toast.success(`Backed up ${successCount} repositories to Telegram`);
+    }
     setIsProcessing(false);
     setProgress(null);
     deselectAll();
@@ -100,26 +138,52 @@ export const ActionBar: React.FC = () => {
     const deletableRepos = selectedRepos.filter(r => r.owner.login === user?.login);
     const idsToRemove: number[] = [];
     
+    let lastBackupResult: TelegramBackupResult | null = null;
+    
     for (let i = 0; i < deletableRepos.length; i++) {
       const repo = deletableRepos[i];
       if (shouldBackup) {
-        setProgress({ current: i + 1, total: deletableRepos.length, step: 'backup', repoName: repo.name });
-        const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
-          fullName: repo.full_name, description: repo.description,
-          isPrivate: repo.private, language: repo.language, stars: repo.stargazers_count,
-        }, 'delete');
-        if (!result.ok) {
-          const go = await new Promise<boolean>(resolve => {
-            setBackupWarning({ repo, error: result.error || 'Unknown error' });
-            setSkipBackupForCurrent(() => resolve);
-          });
-          setBackupWarning(null); setSkipBackupForCurrent(null);
-          if (!go) continue;
+        const existing = logs.find(l => 
+          (l.repoFullName.toLowerCase() === repo.full_name.toLowerCase() || 
+           (l.repoName.toLowerCase() === repo.name.toLowerCase() && l.owner.toLowerCase() === repo.owner.login.toLowerCase()))
+          && l.fileId
+        );
+        if (existing) {
+          lastBackupResult = { ok: true, fileId: existing.fileId };
+          toast.warning('Already Backed Up', { description: `Using existing backup for ${repo.name}` });
+        } else {
+          setProgress({ current: i + 1, total: deletableRepos.length, step: 'backup', repoName: repo.name });
+          const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
+            fullName: repo.full_name, description: repo.description,
+            isPrivate: repo.private, language: repo.language, stars: repo.stargazers_count,
+          }, 'delete');
+          
+          lastBackupResult = result;
+
+          if (!result.ok) {
+            const go = await new Promise<boolean>(resolve => {
+              setBackupWarning({ repo, error: result.error || 'Unknown error' });
+              setSkipBackupForCurrent(() => resolve);
+            });
+            setBackupWarning(null); setSkipBackupForCurrent(null);
+            if (!go) continue;
+          }
         }
       }
       setProgress({ current: i + 1, total: deletableRepos.length, step: 'delete', repoName: repo.name });
-      try { await deleteRepo(repo.owner.login, repo.name); idsToRemove.push(repo.id); }
+      try { 
+        await deleteRepo(repo.owner.login, repo.name); 
+        idsToRemove.push(repo.id); 
+        addLog({
+          repoName: repo.name, repoFullName: repo.full_name, owner: repo.owner.login,
+          action: 'delete', status: 'success',
+          fileId: lastBackupResult?.fileId
+        });
+      }
       catch (e) { console.error(e); }
+    }
+    if (idsToRemove.length > 0) {
+      toast.success(`Deleted ${idsToRemove.length} repositories`);
     }
     removeReposLocally(idsToRemove);
     setIsProcessing(false);
@@ -136,23 +200,37 @@ export const ActionBar: React.FC = () => {
     const leavableRepos = selectedRepos.filter(r => r.owner.login !== user.login);
     const idsToRemove: number[] = [];
     
+    let lastBackupResult: TelegramBackupResult | null = null;
+    
     for (let i = 0; i < leavableRepos.length; i++) {
       const repo = leavableRepos[i];
       
       if (shouldBackup) {
-        setProgress({ current: i + 1, total: leavableRepos.length, step: 'backup', repoName: repo.name });
-        const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
-          fullName: repo.full_name, description: repo.description,
-          isPrivate: repo.private, language: repo.language, stars: repo.stargazers_count,
-        }, 'leave');
-        
-        if (!result.ok) {
-          const go = await new Promise<boolean>(resolve => {
-            setBackupWarning({ repo, error: result.error || 'Unknown error' });
-            setSkipBackupForCurrent(() => resolve);
-          });
-          setBackupWarning(null); setSkipBackupForCurrent(null);
-          if (!go) continue;
+        const existing = logs.find(l => 
+          (l.repoFullName.toLowerCase() === repo.full_name.toLowerCase() || 
+           (l.repoName.toLowerCase() === repo.name.toLowerCase() && l.owner.toLowerCase() === repo.owner.login.toLowerCase()))
+          && l.fileId
+        );
+        if (existing) {
+          lastBackupResult = { ok: true, fileId: existing.fileId };
+          toast.warning('Already Backed Up', { description: `Using existing backup for ${repo.name}` });
+        } else {
+          setProgress({ current: i + 1, total: leavableRepos.length, step: 'backup', repoName: repo.name });
+          const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
+            fullName: repo.full_name, description: repo.description,
+            isPrivate: repo.private, language: repo.language, stars: repo.stargazers_count,
+          }, 'leave');
+          
+          lastBackupResult = result;
+
+          if (!result.ok) {
+            const go = await new Promise<boolean>(resolve => {
+              setBackupWarning({ repo, error: result.error || 'Unknown error' });
+              setSkipBackupForCurrent(() => resolve);
+            });
+            setBackupWarning(null); setSkipBackupForCurrent(null);
+            if (!go) continue;
+          }
         }
       }
 
@@ -160,10 +238,18 @@ export const ActionBar: React.FC = () => {
       try { 
         await leaveRepo(repo.owner.login, repo.name, user.login); 
         idsToRemove.push(repo.id); 
+        addLog({
+          repoName: repo.name, repoFullName: repo.full_name, owner: repo.owner.login,
+          action: 'leave', status: 'success',
+          fileId: lastBackupResult?.fileId
+        });
       }
       catch (e) { console.error(e); }
     }
     
+    if (idsToRemove.length > 0) {
+      toast.success(`Left ${idsToRemove.length} repositories`);
+    }
     removeReposLocally(idsToRemove);
     setIsProcessing(false);
     setProgress(null);
@@ -179,23 +265,37 @@ export const ActionBar: React.FC = () => {
     const ownRepos = selectedRepos.filter(r => r.owner.login === user.login);
     const idsToRemove: number[] = [];
     
+    let lastBackupResult: TelegramBackupResult | null = null;
+
     for (let i = 0; i < ownRepos.length; i++) {
       const repo = ownRepos[i];
       
       if (shouldBackup) {
-        setProgress({ current: i + 1, total: ownRepos.length, step: 'backup', repoName: repo.name });
-        const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
-          fullName: repo.full_name, description: repo.description,
-          isPrivate: repo.private, language: repo.language, stars: repo.stargazers_count,
-        }, 'transfer');
-        
-        if (!result.ok) {
-          const go = await new Promise<boolean>(resolve => {
-            setBackupWarning({ repo, error: result.error || 'Unknown error' });
-            setSkipBackupForCurrent(() => resolve);
-          });
-          setBackupWarning(null); setSkipBackupForCurrent(null);
-          if (!go) continue;
+        const existing = logs.find(l => 
+          (l.repoFullName.toLowerCase() === repo.full_name.toLowerCase() || 
+           (l.repoName.toLowerCase() === repo.name.toLowerCase() && l.owner.toLowerCase() === repo.owner.login.toLowerCase()))
+          && l.fileId
+        );
+        if (existing) {
+          lastBackupResult = { ok: true, fileId: existing.fileId };
+          toast.warning('Already Backed Up', { description: `Using existing backup for ${repo.name}` });
+        } else {
+          setProgress({ current: i + 1, total: ownRepos.length, step: 'backup', repoName: repo.name });
+          const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
+            fullName: repo.full_name, description: repo.description,
+            isPrivate: repo.private, language: repo.language, stars: repo.stargazers_count,
+          }, 'transfer');
+          
+          lastBackupResult = result;
+
+          if (!result.ok) {
+            const go = await new Promise<boolean>(resolve => {
+              setBackupWarning({ repo, error: result.error || 'Unknown error' });
+              setSkipBackupForCurrent(() => resolve);
+            });
+            setBackupWarning(null); setSkipBackupForCurrent(null);
+            if (!go) continue;
+          }
         }
       }
 
@@ -203,10 +303,18 @@ export const ActionBar: React.FC = () => {
       try { 
         await transferRepo(repo.owner.login, repo.name, newOwner); 
         idsToRemove.push(repo.id); 
+        addLog({
+          repoName: repo.name, repoFullName: repo.full_name, owner: repo.owner.login,
+          action: 'transfer', status: 'success',
+          fileId: lastBackupResult?.fileId
+        });
       }
       catch (e) { console.error(e); }
     }
     
+    if (idsToRemove.length > 0) {
+      toast.success(`Shared ${idsToRemove.length} repositories with ${newOwner}`);
+    }
     removeReposLocally(idsToRemove);
     setIsProcessing(false);
     setProgress(null);
@@ -264,7 +372,7 @@ export const ActionBar: React.FC = () => {
             }}
           >
             <div style={{ pointerEvents: 'auto', maxWidth: 'calc(100vw - 32px)' }}>
-            <div style={{ ...pillStyle, display: 'flex', alignItems: 'center', gap: '4px', padding: '6px 10px', overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
+            <div style={{ ...pillStyle, display: 'flex', alignItems: 'center', gap: '8px', padding: '8px 16px', overflowX: 'auto', scrollbarWidth: 'none', msOverflowStyle: 'none' }}>
               <style>{`
                 ::-webkit-scrollbar { display: none; }
               `}</style>
@@ -367,17 +475,18 @@ export const ActionBar: React.FC = () => {
                 <button
                   onClick={() => setTransferModalOpen(true)}
                   disabled={isProcessing}
-                  title="Transfer selected repositories"
+                  title="Share/Transfer selected repositories"
                   style={{
-                    display: 'flex', alignItems: 'center', gap: '8px',
-                    padding: '0 16px', height: '40px', borderRadius: '12px',
-                    background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.2)',
-                    color: '#a78bfa', fontSize: '13px', fontWeight: 500,
+                    display: 'flex', alignItems: 'center', gap: '6px',
+                    padding: '0 12px', height: '36px', borderRadius: '10px',
+                    background: 'rgba(139,92,246,0.15)', border: '1px solid rgba(139,92,246,0.25)',
+                    color: '#a78bfa', fontSize: '12px', fontWeight: 600,
                     cursor: 'pointer', transition: 'all 0.2s',
+                    whiteSpace: 'nowrap', flexShrink: 0
                   }}
                 >
-                  <Share2 size={16} />
-                  <span>Transfer</span>
+                  <Share2 size={14} />
+                  <span style={{ fontSize: '11px' }}>Share</span>
                 </button>
               )}
 
@@ -422,6 +531,8 @@ export const ActionBar: React.FC = () => {
               >
                 <X size={13} />
               </button>
+              
+              <div style={{ width: '4px', flexShrink: 0 }} />
             </div>
             </div>
           </motion.div>

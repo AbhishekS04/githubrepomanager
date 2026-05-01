@@ -99,7 +99,7 @@ export const TransferModal: React.FC<TransferModalProps> = ({
                     </div>
                     <div>
                       <h2 style={{ fontSize: '16px', fontWeight: 600, color: 'white', marginBottom: '5px' }}>
-                        Transfer {isBulk ? `${repoCount} Repositories` : 'Ownership'}
+                        Share {isBulk ? `${repoCount} Repositories` : 'Ownership'}
                       </h2>
                       <p style={{ fontSize: '13px', color: 'rgba(255,255,255,0.4)', lineHeight: 1.5 }}>
                         Search for the new owner. They will receive an invitation in their Notifications.
@@ -246,7 +246,7 @@ export const TransferModal: React.FC<TransferModalProps> = ({
                         opacity: selectedUser ? 1 : 0.5,
                       }}
                     >
-                      {isProcessing ? 'Processing...' : 'Transfer Repo'}
+                      {isProcessing ? 'Processing...' : 'Share Access'}
                     </button>
                   </div>
                 </div>

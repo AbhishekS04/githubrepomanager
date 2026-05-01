@@ -3,6 +3,7 @@ import { Bell, Check, X, Inbox, Loader2 } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { listInvitations, acceptInvitation, declineInvitation } from '../../lib/github';
 import { useRepoStore } from '../../store/repoStore';
+import { toast } from 'sonner';
 // import { useAuthStore } from '../../store/authStore';
 
 export const NotificationBell: React.FC = () => {
@@ -42,13 +43,15 @@ export const NotificationBell: React.FC = () => {
     try {
       if (type === 'accept') {
         await acceptInvitation(id);
-        // Refresh repos if accepted
+        toast.success('Invitation accepted');
         fetchRepos();
       } else {
         await declineInvitation(id);
+        toast.success('Invitation declined');
       }
       await loadInvites();
     } catch (e) {
+      toast.error(`Failed to ${type} invitation`);
       console.error(`Failed to ${type} invitation`, e);
     } finally {
       setActioningId(null);

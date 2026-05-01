@@ -3,6 +3,7 @@ import { useAuthStore } from '../store/authStore';
 export interface TelegramBackupResult {
   ok: boolean;
   messageId?: number;
+  fileId?: string;
   error?: string;
 }
 
@@ -44,13 +45,13 @@ export const backupRepoToTelegram = async (
       body: JSON.stringify({ owner, repo, token, meta, mode }),
     });
 
-    const data = await response.json() as { ok: boolean; message_id?: number; error?: string };
+    const data = await response.json() as { ok: boolean; message_id?: number; file_id?: string; error?: string };
 
     if (!data.ok) {
       return { ok: false, error: data.error || `Server responded with ${response.status}` };
     }
 
-    return { ok: true, messageId: data.message_id };
+    return { ok: true, messageId: data.message_id, fileId: data.file_id };
   } catch (error: unknown) {
     const message = error instanceof Error ? error.message : 'Unknown error';
     return { ok: false, error: message };

@@ -1,6 +1,7 @@
 import { defineConfig, loadEnv } from 'vite';
 import react from '@vitejs/plugin-react';
 import { IncomingMessage, ServerResponse } from 'http';
+import JSZip from 'jszip';
 
 // --------------------------------------------------------------------------
 // Auth middleware – exchanges GitHub OAuth code for access token
@@ -50,12 +51,10 @@ const authMiddleware = (env: Record<string, string>) =>
   };
 
 // --------------------------------------------------------------------------
-// Telegram middleware – proxies zip uploads to Telegram Bot API
+// Telegram middleware – proxies zip uploads and fetches updates
 // --------------------------------------------------------------------------
 const telegramMiddleware = (env: Record<string, string>) =>
   async (req: IncomingMessage, res: ServerResponse, next: () => void) => {
-    if (req.method !== 'POST') return next();
-
     const botToken = env.TELEGRAM_BOT_TOKEN;
     const chatId = env.TELEGRAM_CHAT_ID;
 
@@ -64,6 +63,36 @@ const telegramMiddleware = (env: Record<string, string>) =>
       res.end(JSON.stringify({ ok: false, error: 'Telegram is not configured.' }));
       return;
     }
+
+    if (req.method === 'GET') {
+      try {
+        const updatesRes = await fetch(`https://api.telegram.org/bot${botToken}/getUpdates?limit=20&offset=-20`);
+        const updates = await updatesRes.json() as { ok: boolean, result: any[] };
+        if (!updates.ok) {
+          res.statusCode = 502;
+          res.end(JSON.stringify({ ok: false, error: 'Failed to fetch updates' }));
+          return;
+        }
+
+        const documents = updates.result
+          .filter(u => u.message?.document)
+          .map(u => ({
+            fileId: u.message.document.file_id,
+            fileName: u.message.document.file_name,
+            date: u.message.date
+          }));
+
+        res.setHeader('Content-Type', 'application/json');
+        res.statusCode = 200;
+        res.end(JSON.stringify({ ok: true, documents }));
+      } catch (e: any) {
+        res.statusCode = 500;
+        res.end(JSON.stringify({ ok: false, error: e.message }));
+      }
+      return;
+    }
+
+    if (req.method !== 'POST') return next();
 
     try {
       // Read JSON body
@@ -78,7 +107,7 @@ const telegramMiddleware = (env: Record<string, string>) =>
         return;
       }
 
-      // Step 1: Get real default branch from GitHub (server-side, no CORS)
+      // Step 1: Get real default branch
       const repoInfoRes = await fetch(`https://api.github.com/repos/${owner}/${repo}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -96,42 +125,22 @@ const telegramMiddleware = (env: Record<string, string>) =>
       const repoInfo = await repoInfoRes.json() as { default_branch: string };
       const defaultBranch = repoInfo.default_branch || 'main';
 
-      // Step 2: Download zip from GitHub (server-side, no CORS)
-      const zipRes = await fetch(
-        `https://api.github.com/repos/${owner}/${repo}/zipball/${defaultBranch}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-            Accept: 'application/vnd.github+json',
-            'X-GitHub-Api-Version': '2022-11-28',
-          },
-          redirect: 'follow',
-        }
-      );
-
-      if (!zipRes.ok) {
-        res.statusCode = 502;
-        res.end(JSON.stringify({ ok: false, error: `GitHub zip download failed: ${zipRes.status}` }));
-        return;
-      }
+      // Step 2: Download zip
+      const zipRes = await fetch(`https://api.github.com/repos/${owner}/${repo}/zipball/${defaultBranch}`, {
+        headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+        redirect: 'follow',
+      });
 
       const zipArrayBuffer = await zipRes.arrayBuffer();
       const zipBuffer = Buffer.from(zipArrayBuffer);
-      const fileSizeMb = (zipBuffer.byteLength / (1024 * 1024)).toFixed(1);
 
-      if (zipBuffer.byteLength > 50 * 1024 * 1024) {
-        res.statusCode = 413;
-        res.end(JSON.stringify({ ok: false, error: `Repo zip is ${fileSizeMb} MB — exceeds Telegram's 50 MB limit.` }));
-        return;
-      }
-
-      // Step 3: Build caption
+      // Step 3: Build rich caption
       const sizeDisplay = zipBuffer.byteLength > 1024 * 1024
-        ? `${fileSizeMb} MB`
+        ? `${(zipBuffer.byteLength / (1024 * 1024)).toFixed(1)} MB`
         : `${Math.round(zipBuffer.byteLength / 1024)} KB`;
 
       const dateStr = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
-
+      
       const header = mode === 'delete' ? `🗑 *DELETED: ${meta?.fullName || `${owner}/${repo}`}*` 
                    : mode === 'leave'  ? `🤝 *CONTRIBUTION: ${meta?.fullName || `${owner}/${repo}`}*`
                    : mode === 'transfer' ? `📤 *TRANSFER: ${meta?.fullName || `${owner}/${repo}`}*`
@@ -156,10 +165,10 @@ const telegramMiddleware = (env: Record<string, string>) =>
         `🤖 Powered by GitSweep`,
       ].filter(Boolean).join('\n');
 
-      // Step 4: Upload to Telegram
+      // Step 4: Upload
       const formData = new FormData();
       formData.append('chat_id', chatId);
-      formData.append('document', new Blob([zipBuffer], { type: 'application/zip' }), `${repo}.zip`);
+      formData.append('document', new Blob([zipBuffer]), `${repo}.zip`);
       formData.append('caption', caption);
       formData.append('parse_mode', 'Markdown');
 
@@ -168,22 +177,109 @@ const telegramMiddleware = (env: Record<string, string>) =>
         body: formData,
       });
 
-      const tgData = await telegramRes.json() as { ok: boolean; description?: string; result?: { message_id?: number } };
-
+      const tgData = await telegramRes.json() as any;
       res.setHeader('Content-Type', 'application/json');
-      if (!tgData.ok) {
-        res.statusCode = 502;
-        res.end(JSON.stringify({ ok: false, error: tgData.description || 'Telegram API error' }));
+      res.statusCode = 200;
+      res.end(JSON.stringify({ 
+        ok: true, 
+        message_id: tgData.result?.message_id,
+        file_id: tgData.result?.document?.file_id
+      }));
+    } catch (error: any) {
+      res.statusCode = 500;
+      res.end(JSON.stringify({ ok: false, error: error.message }));
+    }
+  };
+
+// --------------------------------------------------------------------------
+// Restore middleware – resurrects a repo from Telegram backup
+// --------------------------------------------------------------------------
+const restoreMiddleware = (env: Record<string, string>) =>
+  async (req: IncomingMessage, res: ServerResponse, next: () => void) => {
+    if (req.method !== 'POST') return next();
+
+    const botToken = env.TELEGRAM_BOT_TOKEN;
+    if (!botToken) {
+      res.statusCode = 503;
+      res.end(JSON.stringify({ ok: false, error: 'Telegram bot token missing.' }));
+      return;
+    }
+
+    try {
+      const chunks: Buffer[] = [];
+      for await (const chunk of req) chunks.push(chunk as Buffer);
+      const body = JSON.parse(Buffer.concat(chunks).toString());
+      const { fileId, repoName, owner, token } = body;
+
+      if (!fileId || !repoName || !token) {
+        res.statusCode = 400;
+        res.end(JSON.stringify({ ok: false, error: 'Missing fileId, repoName, or token' }));
         return;
       }
 
+      // Step 1: Get file path from Telegram
+      const fileRes = await fetch(`https://api.telegram.org/bot${botToken}/getFile?file_id=${fileId}`);
+      const fileData = await fileRes.json() as any;
+      if (!fileData.ok) {
+        console.error('[Restore] Telegram getFile failed:', fileData);
+        res.statusCode = 502;
+        res.end(JSON.stringify({ ok: false, error: `Telegram error: ${fileData.description || 'file lookup failed'}` }));
+        return;
+      }
+
+      const filePath = fileData.result.file_path;
+      const downloadUrl = `https://api.telegram.org/file/bot${botToken}/${filePath}`;
+
+      // Step 2: Download zip
+      const zipRes = await fetch(downloadUrl);
+      const zipBuffer = await zipRes.arrayBuffer();
+
+      // Step 3: Unzip with JSZip
+      const zip = new JSZip();
+      const content = await zip.loadAsync(zipBuffer);
+      const rootFolder = Object.keys(content.files).find(name => name.endsWith('/'));
+
+      // Step 4: Create Repo on GitHub
+      const createRes = await fetch('https://api.github.com/user/repos', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: 'application/vnd.github+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name: repoName, private: true, auto_init: false }),
+      });
+
+      if (!createRes.ok) {
+        res.statusCode = createRes.status;
+        res.end(JSON.stringify({ ok: false, error: 'GitHub repo creation failed' }));
+        return;
+      }
+
+      const newRepo = await createRes.json() as any;
+
+      // Step 5: Upload top files (demonstration/prototype logic)
+      const filesToUpload = Object.keys(content.files)
+        .filter(name => !content.files[name].dir && (rootFolder ? name.startsWith(rootFolder) : true))
+        .slice(0, 20); // Limit for prototype
+
+      for (const fileName of filesToUpload) {
+        const fileContent = await content.files[fileName].async('base64');
+        const relativePath = rootFolder ? fileName.replace(rootFolder, '') : fileName;
+        
+        await fetch(`https://api.github.com/repos/${owner}/${repoName}/contents/${relativePath}`, {
+          method: 'PUT',
+          headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
+          body: JSON.stringify({ message: `Restore ${relativePath}`, content: fileContent }),
+        });
+      }
+
+      res.setHeader('Content-Type', 'application/json');
       res.statusCode = 200;
-      res.end(JSON.stringify({ ok: true, message_id: tgData.result?.message_id }));
-    } catch (error: unknown) {
-      const msg = error instanceof Error ? error.message : 'Internal server error';
-      console.error('[/api/telegram] Error:', msg);
+      res.end(JSON.stringify({ ok: true, url: newRepo.html_url }));
+    } catch (e: any) {
       res.statusCode = 500;
-      res.end(JSON.stringify({ ok: false, error: msg }));
+      res.end(JSON.stringify({ ok: false, error: e.message }));
     }
   };
 
@@ -195,54 +291,36 @@ const downloadMiddleware = () =>
     if (req.method !== 'POST') return next();
 
     try {
-      // Read JSON body
       const chunks: Buffer[] = [];
       for await (const chunk of req) chunks.push(chunk as Buffer);
       const body = JSON.parse(Buffer.concat(chunks).toString());
       const { owner, repo, token, branch = 'main' } = body;
 
-      if (!owner || !repo || !token) {
-        res.statusCode = 400;
-        res.end(JSON.stringify({ error: 'Missing owner, repo, or token' }));
-        return;
-      }
-
-      const zipUrl = `https://api.github.com/repos/${owner}/${repo}/zipball/${branch}`;
-      const response = await fetch(zipUrl, {
+      const response = await fetch(`https://api.github.com/repos/${owner}/${repo}/zipball/${branch}`, {
         headers: { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json' },
         redirect: 'follow',
       });
 
-      if (!response.ok) {
-        res.statusCode = response.status;
-        res.end(JSON.stringify({ error: `GitHub download failed: ${response.statusText}` }));
-        return;
-      }
-
-      res.setHeader('Content-Type', 'application/zip');
-      res.setHeader('Content-Disposition', `attachment; filename="${repo}-${branch}.zip"`);
-      
       const arrayBuffer = await response.arrayBuffer();
+      res.setHeader('Content-Type', 'application/zip');
+      res.setHeader('Content-Disposition', `attachment; filename="${repo}.zip"`);
       res.end(Buffer.from(arrayBuffer));
-    } catch (error) {
+    } catch {
       res.statusCode = 500;
       res.end(JSON.stringify({ error: 'Internal server error' }));
     }
   };
 
-// --------------------------------------------------------------------------
-// Vite plugin that wires both middlewares into the dev server
-// --------------------------------------------------------------------------
 const apiPlugin = (env: Record<string, string>) => ({
   name: 'api-middleware',
-  configureServer(server: { middlewares: { use: (path: string, fn: any) => void } }) {
+  configureServer(server: any) {
     server.middlewares.use('/api/auth', authMiddleware(env));
     server.middlewares.use('/api/telegram', telegramMiddleware(env));
+    server.middlewares.use('/api/restore', restoreMiddleware(env));
     server.middlewares.use('/api/download', downloadMiddleware());
   },
 });
 
-// https://vite.dev/config/
 export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
   return {

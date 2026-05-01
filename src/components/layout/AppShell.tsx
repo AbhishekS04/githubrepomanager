@@ -5,9 +5,15 @@ import { GithubIcon } from '../ui/GithubIcon';
 import { motion } from 'framer-motion';
 
 import { NotificationBell } from './NotificationBell';
+import { History } from 'lucide-react';
+import { BackupVault } from '../ui/BackupVault';
+import { useBackupStore } from '../../store/backupStore';
+import { toast } from 'sonner';
 
 export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const { user, logout } = useAuthStore();
+  const { logs } = useBackupStore();
+  const [vaultOpen, setVaultOpen] = React.useState(false);
 
   return (
     <div className="min-h-screen" style={{ background: 'hsl(0 0% 4%)' }}>
@@ -32,6 +38,16 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
           {/* User info + Notifications + logout */}
           {user && (
             <div className="flex items-center gap-3">
+              <button
+                onClick={() => setVaultOpen(true)}
+                title="Backup Vault"
+                className="relative p-1.5 rounded-full text-white/40 hover:text-white/80 hover:bg-white/8 transition-all duration-200 cursor-pointer"
+              >
+                <History className="h-4 w-4" />
+                {logs.length > 0 && !vaultOpen && (
+                  <span className="absolute top-0 right-0 block h-1.5 w-1.5 rounded-full bg-blue-500 ring-2 ring-black" />
+                )}
+              </button>
               <NotificationBell />
               <div className="flex items-center gap-2">
                 <img
@@ -44,7 +60,10 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
                 </span>
               </div>
               <button
-                onClick={logout}
+                onClick={() => {
+                  logout();
+                  toast.success('Logged out successfully');
+                }}
                 title="Sign out"
                 className="p-1.5 rounded-full text-white/40 hover:text-white/80 hover:bg-white/8 transition-all duration-200 cursor-pointer"
               >
@@ -59,6 +78,8 @@ export const AppShell: React.FC<{ children: React.ReactNode }> = ({ children }) 
       <main className="max-w-6xl mx-auto px-4 pt-24 pb-8">
         {children}
       </main>
+
+      <BackupVault isOpen={vaultOpen} onClose={() => setVaultOpen(false)} />
     </div>
   );
 };

@@ -3,6 +3,7 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 import { Loader2 } from 'lucide-react';
 import { useAuthStore } from '../store/authStore';
 import { getOctokit } from '../lib/github';
+import { toast } from 'sonner';
 
 export const OAuthCallback: React.FC = () => {
   const [searchParams] = useSearchParams();
@@ -63,7 +64,9 @@ export const OAuthCallback: React.FC = () => {
         navigate('/', { replace: true });
       } catch (err: any) {
         console.error('OAuth Error:', err);
-        setError(err.message || 'An unexpected error occurred during authentication.');
+        const msg = err.message || 'An unexpected error occurred during authentication.';
+        toast.error('Authentication Failed', { description: msg });
+        setError(msg);
       }
     };
 

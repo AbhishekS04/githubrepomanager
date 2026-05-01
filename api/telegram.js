@@ -1,13 +1,34 @@
 export default async function handler(req, res) {
-  if (req.method !== 'POST') {
-    return res.status(405).json({ error: 'Method not allowed' });
-  }
-
   const botToken = process.env.TELEGRAM_BOT_TOKEN;
   const chatId = process.env.TELEGRAM_CHAT_ID;
 
   if (!botToken || !chatId || botToken === 'your_telegram_bot_token') {
     return res.status(503).json({ ok: false, error: 'Telegram is not configured on this server.' });
+  }
+
+  if (req.method === 'GET') {
+    try {
+      const updatesRes = await fetch(`https://api.telegram.org/bot${botToken}/getUpdates?limit=20&offset=-20`);
+      const updates = await updatesRes.json();
+      if (!updates.ok) return res.status(502).json({ ok: false, error: 'Failed to fetch updates' });
+
+      // Find the most recent document updates
+      const documents = updates.result
+        .filter(u => u.message?.document)
+        .map(u => ({
+          fileId: u.message.document.file_id,
+          fileName: u.message.document.file_name,
+          date: u.message.date
+        }));
+
+      return res.status(200).json({ ok: true, documents });
+    } catch (e) {
+      return res.status(500).json({ ok: false, error: e.message });
+    }
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method not allowed' });
   }
 
   // Vercel pre-parses the body if it's JSON
@@ -109,7 +130,11 @@ export default async function handler(req, res) {
       return res.status(502).json({ ok: false, error: telegramData.description || 'Telegram API error' });
     }
 
-    return res.status(200).json({ ok: true, message_id: telegramData.result?.message_id });
+    return res.status(200).json({ 
+      ok: true, 
+      message_id: telegramData.result?.message_id,
+      file_id: telegramData.result?.document?.file_id
+    });
   } catch (error) {
     const msg = error instanceof Error ? error.message : 'Internal server error';
     console.error('[/api/telegram] Error:', msg);
