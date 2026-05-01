@@ -1,7 +1,7 @@
 # Graph Report - /run/media/abhishek/BBC/repos/github-d  (2026-05-02)
 
 ## Corpus Check
-- 30 files · ~17,748 words
+- 30 files · ~18,057 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
