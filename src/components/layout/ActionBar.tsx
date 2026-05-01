@@ -4,15 +4,16 @@ import { useSelectionStore } from '../../store/selectionStore';
 import { useRepoStore } from '../../store/repoStore';
 import { useAuthStore } from '../../store/authStore';
 import {
-  Download, Lock, Unlock, Archive, ArchiveRestore,
-  Trash2, X, Send,
-} from 'lucide-react';
-import {
   updateRepoVisibility, updateRepoArchived,
-  downloadRepoZip, deleteRepo,
+  downloadRepoZip, deleteRepo, leaveRepo,
 } from '../../lib/github';
+import {
+  Download, Lock, Unlock, Archive, ArchiveRestore,
+  Trash2, X, Send, LogOut,
+} from 'lucide-react';
 import { backupRepoToTelegram } from '../../lib/telegram';
 import { DeleteModal } from '../ui/DeleteModal';
+import { LeaveModal } from '../ui/LeaveModal';
 import type { Repo } from '../../lib/github';
 
 type ProgressStep = 'backup' | 'delete' | 'action';
@@ -26,6 +27,7 @@ export const ActionBar: React.FC = () => {
   const [isProcessing, setIsProcessing] = useState(false);
   const [progress, setProgress] = useState<Progress | null>(null);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
+  const [leaveModalOpen, setLeaveModalOpen] = useState(false);
   const [backupWarning, setBackupWarning] = useState<BackupWarning | null>(null);
   const [skipBackupForCurrent, setSkipBackupForCurrent] = useState<((v: boolean) => void) | null>(null);
 
@@ -117,6 +119,49 @@ export const ActionBar: React.FC = () => {
       try { await deleteRepo(repo.owner.login, repo.name); idsToRemove.push(repo.id); }
       catch (e) { console.error(e); }
     }
+    removeReposLocally(idsToRemove);
+    setIsProcessing(false);
+    setProgress(null);
+    deselectAll();
+  };
+
+  const handleLeave = async (shouldBackup: boolean) => {
+    if (!user) return;
+    setLeaveModalOpen(false);
+    setIsProcessing(true);
+    
+    // Only target repos the user doesn't own
+    const leavableRepos = selectedRepos.filter(r => r.owner.login !== user.login);
+    const idsToRemove: number[] = [];
+    
+    for (let i = 0; i < leavableRepos.length; i++) {
+      const repo = leavableRepos[i];
+      
+      if (shouldBackup) {
+        setProgress({ current: i + 1, total: leavableRepos.length, step: 'backup', repoName: repo.name });
+        const result = await backupRepoToTelegram(repo.owner.login, repo.name, {
+          fullName: repo.full_name, description: repo.description,
+          isPrivate: repo.private, language: repo.language, stars: repo.stargazers_count,
+        }, 'leave');
+        
+        if (!result.ok) {
+          const go = await new Promise<boolean>(resolve => {
+            setBackupWarning({ repo, error: result.error || 'Unknown error' });
+            setSkipBackupForCurrent(() => resolve);
+          });
+          setBackupWarning(null); setSkipBackupForCurrent(null);
+          if (!go) continue;
+        }
+      }
+
+      setProgress({ current: i + 1, total: leavableRepos.length, step: 'action', repoName: repo.name });
+      try { 
+        await leaveRepo(repo.owner.login, repo.name, user.login); 
+        idsToRemove.push(repo.id); 
+      }
+      catch (e) { console.error(e); }
+    }
+    
     removeReposLocally(idsToRemove);
     setIsProcessing(false);
     setProgress(null);
@@ -271,6 +316,30 @@ export const ActionBar: React.FC = () => {
                 <span className="hidden sm:inline">Delete</span>
               </button>
 
+              {/* Leave */}
+              {hasNonOwnedSelected && (
+                <button
+                  onClick={() => setLeaveModalOpen(true)}
+                  disabled={isProcessing}
+                  title="Leave selected contribution repositories"
+                  style={{
+                    display: 'flex', alignItems: 'center', gap: '5px',
+                    padding: '5px 12px', borderRadius: '9999px',
+                    background: 'rgba(59,130,246,0.12)', 
+                    border: '1px solid rgba(59,130,246,0.2)',
+                    color: '#3b82f6', 
+                    fontSize: '12px', fontWeight: 600,
+                    cursor: 'pointer', whiteSpace: 'nowrap',
+                    transition: 'background 0.15s',
+                  }}
+                  onMouseEnter={e => { e.currentTarget.style.background = 'rgba(59,130,246,0.22)'; }}
+                  onMouseLeave={e => { e.currentTarget.style.background = 'rgba(59,130,246,0.12)'; }}
+                >
+                  <LogOut size={14} />
+                  <span className="hidden sm:inline">Leave</span>
+                </button>
+              )}
+
               {/* Dismiss */}
               <button
                 onClick={deselectAll}
@@ -346,6 +415,15 @@ export const ActionBar: React.FC = () => {
         repoCount={count}
         singleRepoName={count === 1 ? selectedRepos[0]?.name : undefined}
         isDeleting={isProcessing}
+      />
+
+      {/* ─── Leave Modal ─────────────────────────────────────── */}
+      <LeaveModal
+        isOpen={leaveModalOpen}
+        onClose={() => setLeaveModalOpen(false)}
+        onConfirm={handleLeave}
+        repoCount={selectedRepos.filter(r => r.owner.login !== user?.login).length}
+        isProcessing={isProcessing}
       />
     </>
   );

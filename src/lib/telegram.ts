@@ -30,7 +30,7 @@ export const backupRepoToTelegram = async (
   owner: string,
   repo: string,
   meta: BackupMetadata,
-  mode: 'backup' | 'delete' = 'delete'
+  mode: 'backup' | 'delete' | 'leave' = 'delete'
 ): Promise<TelegramBackupResult> => {
   try {
     const token = useAuthStore.getState().token;

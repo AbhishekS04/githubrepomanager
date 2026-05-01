@@ -81,6 +81,15 @@ export const deleteRepo = async (owner: string, repo: string) => {
   });
 };
 
+export const leaveRepo = async (owner: string, repo: string, username: string) => {
+  const client = getOctokit();
+  await client.rest.repos.removeCollaborator({
+    owner,
+    repo,
+    username,
+  });
+};
+
 export const downloadRepoZip = async (owner: string, repo: string, defaultBranch: string = 'main') => {
   const token = useAuthStore.getState().token;
   if (!token) return;

@@ -60,8 +60,16 @@ export default async function handler(req, res) {
 
     const dateStr = new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' });
     
+    const header = mode === 'delete' ? `🗑 *DELETED: ${meta?.fullName || `${owner}/${repo}`}*` 
+                 : mode === 'leave'  ? `🤝 *CONTRIBUTION: ${meta?.fullName || `${owner}/${repo}`}*`
+                 : `📦 *BACKUP: ${meta?.fullName || `${owner}/${repo}`}*`;
+
+    const footer = mode === 'delete' ? `❌ Removed on: ${dateStr} IST`
+                 : mode === 'leave'  ? `✅ Left on: ${dateStr} IST`
+                 : `✅ Backed up on: ${dateStr} IST`;
+
     const caption = [
-      mode === 'delete' ? `🗑 *DELETED: ${meta?.fullName || `${owner}/${repo}`}*` : `📦 *BACKUP: ${meta?.fullName || `${owner}/${repo}`}*`,
+      header,
       meta?.description ? `📝 ${meta.description}` : null,
       ``,
       `🔒 Visibility: ${meta?.isPrivate ? 'Private' : 'Public'}`,
@@ -70,7 +78,7 @@ export default async function handler(req, res) {
       `💾 Size: ${sizeDisplay}`,
       `🌿 Branch: ${defaultBranch}`,
       ``,
-      mode === 'delete' ? `❌ Removed on: ${dateStr} IST` : `✅ Backed up on: ${dateStr} IST`,
+      footer,
       `🤖 Powered by GitSweep`,
     ].filter(Boolean).join('\n');
 
