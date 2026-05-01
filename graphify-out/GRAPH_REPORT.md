@@ -1,12 +1,12 @@
 # Graph Report - /run/media/abhishek/BBC/repos/github-d  (2026-05-02)
 
 ## Corpus Check
-- 30 files · ~18,057 words
+- 32 files · ~20,025 words
 - Verdict: corpus is large enough that graph structure adds value.
 
 ## Summary
-- 70 nodes · 56 edges · 29 communities detected
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 6 edges (avg confidence: 0.8)
+- 82 nodes · 77 edges · 30 communities detected
+- Extraction: 86% EXTRACTED · 14% INFERRED · 0% AMBIGUOUS · INFERRED: 11 edges (avg confidence: 0.8)
 - Token cost: 0 input · 0 output
 
 ## Community Hubs (Navigation)
@@ -39,52 +39,53 @@
 - [[_COMMUNITY_Community 26|Community 26]]
 - [[_COMMUNITY_Community 27|Community 27]]
 - [[_COMMUNITY_Community 28|Community 28]]
+- [[_COMMUNITY_Community 29|Community 29]]
 
 ## God Nodes (most connected - your core abstractions)
-1. `getOctokit()` - 6 edges
+1. `getOctokit()` - 11 edges
 2. `handleBulkAction()` - 5 edges
-3. `backupRepoToTelegram()` - 4 edges
-4. `handleDownloadZip()` - 3 edges
-5. `handleDelete()` - 3 edges
-6. `handleLeave()` - 3 edges
-7. `deleteRepo()` - 3 edges
-8. `leaveRepo()` - 3 edges
-9. `handleMakePrivate()` - 2 edges
-10. `handleMakePublic()` - 2 edges
+3. `backupRepoToTelegram()` - 5 edges
+4. `handleAction()` - 4 edges
+5. `loadInvites()` - 3 edges
+6. `handleDownloadZip()` - 3 edges
+7. `handleDelete()` - 3 edges
+8. `handleLeave()` - 3 edges
+9. `handleTransfer()` - 3 edges
+10. `listInvitations()` - 3 edges
 
 ## Surprising Connections (you probably didn't know these)
+- `loadInvites()` --calls--> `listInvitations()`  [INFERRED]
+  /run/media/abhishek/BBC/repos/github-d/src/components/layout/NotificationBell.tsx → /run/media/abhishek/BBC/repos/github-d/src/lib/github.ts
+- `handleAction()` --calls--> `acceptInvitation()`  [INFERRED]
+  /run/media/abhishek/BBC/repos/github-d/src/components/layout/NotificationBell.tsx → /run/media/abhishek/BBC/repos/github-d/src/lib/github.ts
+- `handleAction()` --calls--> `declineInvitation()`  [INFERRED]
+  /run/media/abhishek/BBC/repos/github-d/src/components/layout/NotificationBell.tsx → /run/media/abhishek/BBC/repos/github-d/src/lib/github.ts
 - `handleDelete()` --calls--> `deleteRepo()`  [INFERRED]
   /run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx → /run/media/abhishek/BBC/repos/github-d/src/lib/github.ts
 - `handleLeave()` --calls--> `leaveRepo()`  [INFERRED]
   /run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx → /run/media/abhishek/BBC/repos/github-d/src/lib/github.ts
-- `handleDownloadZip()` --calls--> `downloadRepoZip()`  [INFERRED]
-  /run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx → /run/media/abhishek/BBC/repos/github-d/src/lib/github.ts
-- `handleDownloadZip()` --calls--> `backupRepoToTelegram()`  [INFERRED]
-  /run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx → /run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts
-- `handleDelete()` --calls--> `backupRepoToTelegram()`  [INFERRED]
-  /run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx → /run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts
 
 ## Communities
 
 ### Community 0 - "Community 0"
-Cohesion: 0.43
-Nodes (6): deleteRepo(), fetchAllRepos(), getOctokit(), leaveRepo(), updateRepoArchived(), updateRepoVisibility()
+Cohesion: 0.22
+Nodes (11): handleArchive(), handleBulkAction(), handleDelete(), handleDownloadZip(), handleLeave(), handleMakePrivate(), handleMakePublic(), handleTransfer() (+3 more)
 
 ### Community 1 - "Community 1"
-Cohesion: 0.29
-Nodes (5): handleDelete(), handleDownloadZip(), handleLeave(), downloadRepoZip(), backupRepoToTelegram()
+Cohesion: 0.28
+Nodes (11): acceptInvitation(), declineInvitation(), deleteRepo(), fetchAllRepos(), getOctokit(), leaveRepo(), listInvitations(), searchUsers() (+3 more)
 
 ### Community 2 - "Community 2"
-Cohesion: 0.6
-Nodes (5): handleArchive(), handleBulkAction(), handleMakePrivate(), handleMakePublic(), handleUnarchive()
+Cohesion: 0.4
+Nodes (0): 
 
 ### Community 3 - "Community 3"
 Cohesion: 0.4
 Nodes (0): 
 
 ### Community 4 - "Community 4"
-Cohesion: 0.4
-Nodes (0): 
+Cohesion: 0.67
+Nodes (2): handleAction(), loadInvites()
 
 ### Community 5 - "Community 5"
 Cohesion: 0.67
@@ -182,6 +183,10 @@ Nodes (0):
 Cohesion: 1.0
 Nodes (0): 
 
+### Community 29 - "Community 29"
+Cohesion: 1.0
+Nodes (0): 
+
 ## Knowledge Gaps
 - **Thin community `Community 7`** (2 nodes): `Dashboard()`, `Dashboard.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
@@ -191,53 +196,51 @@ Nodes (0):
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 - **Thin community `Community 10`** (2 nodes): `TelegramSetupBanner.tsx`, `handleDismiss()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 11`** (2 nodes): `GithubIcon()`, `GithubIcon.tsx`
+- **Thin community `Community 11`** (2 nodes): `TransferModal.tsx`, `handleClose()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 12`** (2 nodes): `handleSelectAll()`, `RepoList.tsx`
+- **Thin community `Community 12`** (2 nodes): `GithubIcon()`, `GithubIcon.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 13`** (2 nodes): `loginWithGitHub()`, `auth.ts`
+- **Thin community `Community 13`** (2 nodes): `handleSelectAll()`, `RepoList.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 14`** (2 nodes): `utils.ts`, `cn()`
+- **Thin community `Community 14`** (2 nodes): `loginWithGitHub()`, `auth.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 15`** (2 nodes): `handler()`, `auth.js`
+- **Thin community `Community 15`** (2 nodes): `utils.ts`, `cn()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 16`** (2 nodes): `telegram.js`, `handler()`
+- **Thin community `Community 16`** (2 nodes): `handler()`, `auth.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 17`** (2 nodes): `handler()`, `download.js`
+- **Thin community `Community 17`** (2 nodes): `telegram.js`, `handler()`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 18`** (1 nodes): `postcss.config.js`
+- **Thin community `Community 18`** (2 nodes): `handler()`, `download.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 19`** (1 nodes): `tailwind.config.js`
+- **Thin community `Community 19`** (1 nodes): `postcss.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 20`** (1 nodes): `eslint.config.js`
+- **Thin community `Community 20`** (1 nodes): `tailwind.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 21`** (1 nodes): `Login.tsx`
+- **Thin community `Community 21`** (1 nodes): `eslint.config.js`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 22`** (1 nodes): `AppShell.tsx`
+- **Thin community `Community 22`** (1 nodes): `Login.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 23`** (1 nodes): `Checkbox.tsx`
+- **Thin community `Community 23`** (1 nodes): `AppShell.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 24`** (1 nodes): `Button.tsx`
+- **Thin community `Community 24`** (1 nodes): `Checkbox.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 25`** (1 nodes): `FilterBar.tsx`
+- **Thin community `Community 25`** (1 nodes): `Button.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 26`** (1 nodes): `repoStore.ts`
+- **Thin community `Community 26`** (1 nodes): `FilterBar.tsx`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 27`** (1 nodes): `selectionStore.ts`
+- **Thin community `Community 27`** (1 nodes): `repoStore.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
-- **Thin community `Community 28`** (1 nodes): `authStore.ts`
+- **Thin community `Community 28`** (1 nodes): `selectionStore.ts`
+  Too small to be a meaningful cluster - may be noise or needs more connections extracted.
+- **Thin community `Community 29`** (1 nodes): `authStore.ts`
   Too small to be a meaningful cluster - may be noise or needs more connections extracted.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
-- **Why does `handleDelete()` connect `Community 1` to `Community 0`, `Community 2`?**
+- **Why does `transferRepo()` connect `Community 1` to `Community 0`?**
   _High betweenness centrality (0.016) - this node is a cross-community bridge._
-- **Why does `handleLeave()` connect `Community 1` to `Community 0`, `Community 2`?**
-  _High betweenness centrality (0.016) - this node is a cross-community bridge._
-- **Are the 3 inferred relationships involving `backupRepoToTelegram()` (e.g. with `handleDownloadZip()` and `handleDelete()`) actually correct?**
-  _`backupRepoToTelegram()` has 3 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 2 inferred relationships involving `handleDownloadZip()` (e.g. with `downloadRepoZip()` and `backupRepoToTelegram()`) actually correct?**
-  _`handleDownloadZip()` has 2 INFERRED edges - model-reasoned connections that need verification._
-- **Are the 2 inferred relationships involving `handleDelete()` (e.g. with `backupRepoToTelegram()` and `deleteRepo()`) actually correct?**
-  _`handleDelete()` has 2 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 4 inferred relationships involving `backupRepoToTelegram()` (e.g. with `handleDownloadZip()` and `handleDelete()`) actually correct?**
+  _`backupRepoToTelegram()` has 4 INFERRED edges - model-reasoned connections that need verification._
+- **Are the 2 inferred relationships involving `handleAction()` (e.g. with `acceptInvitation()` and `declineInvitation()`) actually correct?**
+  _`handleAction()` has 2 INFERRED edges - model-reasoned connections that need verification._
