@@ -9,7 +9,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/postcss.config.js",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_postcss_config_js",
-      "community": 17,
+      "community": 18,
       "norm_label": "postcss.config.js"
     },
     {
@@ -18,7 +18,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/tailwind.config.js",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_tailwind_config_js",
-      "community": 18,
+      "community": 19,
       "norm_label": "tailwind.config.js"
     },
     {
@@ -27,7 +27,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/eslint.config.js",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_eslint_config_js",
-      "community": 19,
+      "community": 20,
       "norm_label": "eslint.config.js"
     },
     {
@@ -61,7 +61,7 @@
       "label": "downloadMiddleware()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
-      "source_location": "L183",
+      "source_location": "L191",
       "id": "vite_config_downloadmiddleware",
       "community": 3,
       "norm_label": "downloadmiddleware()"
@@ -70,7 +70,7 @@
       "label": "apiPlugin()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
-      "source_location": "L226",
+      "source_location": "L234",
       "id": "vite_config_apiplugin",
       "community": 3,
       "norm_label": "apiplugin()"
@@ -108,7 +108,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/pages/Login.tsx",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_pages_login_tsx",
-      "community": 20,
+      "community": 21,
       "norm_label": "login.tsx"
     },
     {
@@ -153,7 +153,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/AppShell.tsx",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_components_layout_appshell_tsx",
-      "community": 21,
+      "community": 22,
       "norm_label": "appshell.tsx"
     },
     {
@@ -162,71 +162,98 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
-      "community": 1,
+      "community": 2,
       "norm_label": "actionbar.tsx"
     },
     {
       "label": "handleBulkAction()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L35",
+      "source_location": "L37",
       "id": "actionbar_handlebulkaction",
-      "community": 1,
+      "community": 2,
       "norm_label": "handlebulkaction()"
     },
     {
       "label": "handleMakePrivate()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L53",
+      "source_location": "L55",
       "id": "actionbar_handlemakeprivate",
-      "community": 1,
+      "community": 2,
       "norm_label": "handlemakeprivate()"
     },
     {
       "label": "handleMakePublic()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L54",
+      "source_location": "L56",
       "id": "actionbar_handlemakepublic",
-      "community": 1,
+      "community": 2,
       "norm_label": "handlemakepublic()"
     },
     {
       "label": "handleArchive()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L55",
+      "source_location": "L57",
       "id": "actionbar_handlearchive",
-      "community": 1,
+      "community": 2,
       "norm_label": "handlearchive()"
     },
     {
       "label": "handleUnarchive()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L56",
+      "source_location": "L58",
       "id": "actionbar_handleunarchive",
-      "community": 1,
+      "community": 2,
       "norm_label": "handleunarchive()"
     },
     {
       "label": "handleDownloadZip()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L57",
+      "source_location": "L59",
       "id": "actionbar_handledownloadzip",
-      "community": 2,
+      "community": 1,
       "norm_label": "handledownloadzip()"
     },
     {
       "label": "handleDelete()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L91",
+      "source_location": "L93",
       "id": "actionbar_handledelete",
-      "community": 2,
+      "community": 1,
       "norm_label": "handledelete()"
+    },
+    {
+      "label": "handleLeave()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L128",
+      "id": "actionbar_handleleave",
+      "community": 1,
+      "norm_label": "handleleave()"
+    },
+    {
+      "label": "LeaveModal.tsx",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/LeaveModal.tsx",
+      "source_location": "L1",
+      "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_leavemodal_tsx",
+      "community": 9,
+      "norm_label": "leavemodal.tsx"
+    },
+    {
+      "label": "handleClose()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/LeaveModal.tsx",
+      "source_location": "L22",
+      "id": "leavemodal_handleclose",
+      "community": 9,
+      "norm_label": "handleclose()"
     },
     {
       "label": "TelegramSetupBanner.tsx",
@@ -234,7 +261,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/TelegramSetupBanner.tsx",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_telegramsetupbanner_tsx",
-      "community": 9,
+      "community": 10,
       "norm_label": "telegramsetupbanner.tsx"
     },
     {
@@ -243,7 +270,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/TelegramSetupBanner.tsx",
       "source_location": "L17",
       "id": "telegramsetupbanner_handledismiss",
-      "community": 9,
+      "community": 10,
       "norm_label": "handledismiss()"
     },
     {
@@ -252,7 +279,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/Checkbox.tsx",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_checkbox_tsx",
-      "community": 22,
+      "community": 23,
       "norm_label": "checkbox.tsx"
     },
     {
@@ -288,7 +315,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/GithubIcon.tsx",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_githubicon_tsx",
-      "community": 10,
+      "community": 11,
       "norm_label": "githubicon.tsx"
     },
     {
@@ -297,7 +324,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/GithubIcon.tsx",
       "source_location": "L3",
       "id": "githubicon_githubicon",
-      "community": 10,
+      "community": 11,
       "norm_label": "githubicon()"
     },
     {
@@ -306,7 +333,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/Button.tsx",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_components_ui_button_tsx",
-      "community": 23,
+      "community": 24,
       "norm_label": "button.tsx"
     },
     {
@@ -315,7 +342,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoList.tsx",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_components_repos_repolist_tsx",
-      "community": 11,
+      "community": 12,
       "norm_label": "repolist.tsx"
     },
     {
@@ -324,7 +351,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/RepoList.tsx",
       "source_location": "L18",
       "id": "repolist_handleselectall",
-      "community": 11,
+      "community": 12,
       "norm_label": "handleselectall()"
     },
     {
@@ -378,7 +405,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/repos/FilterBar.tsx",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_components_repos_filterbar_tsx",
-      "community": 24,
+      "community": 25,
       "norm_label": "filterbar.tsx"
     },
     {
@@ -387,7 +414,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/store/repoStore.ts",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_store_repostore_ts",
-      "community": 25,
+      "community": 26,
       "norm_label": "repostore.ts"
     },
     {
@@ -396,7 +423,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/store/selectionStore.ts",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_store_selectionstore_ts",
-      "community": 26,
+      "community": 27,
       "norm_label": "selectionstore.ts"
     },
     {
@@ -405,7 +432,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/store/authStore.ts",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_store_authstore_ts",
-      "community": 27,
+      "community": 28,
       "norm_label": "authstore.ts"
     },
     {
@@ -414,7 +441,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/auth.ts",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_lib_auth_ts",
-      "community": 12,
+      "community": 13,
       "norm_label": "auth.ts"
     },
     {
@@ -423,7 +450,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/auth.ts",
       "source_location": "L3",
       "id": "auth_loginwithgithub",
-      "community": 12,
+      "community": 13,
       "norm_label": "loginwithgithub()"
     },
     {
@@ -432,7 +459,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/utils.ts",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_lib_utils_ts",
-      "community": 13,
+      "community": 14,
       "norm_label": "utils.ts"
     },
     {
@@ -441,7 +468,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/utils.ts",
       "source_location": "L4",
       "id": "utils_cn",
-      "community": 13,
+      "community": 14,
       "norm_label": "cn()"
     },
     {
@@ -508,12 +535,21 @@
       "norm_label": "deleterepo()"
     },
     {
-      "label": "downloadRepoZip()",
+      "label": "leaveRepo()",
       "file_type": "code",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
       "source_location": "L84",
+      "id": "github_leaverepo",
+      "community": 0,
+      "norm_label": "leaverepo()"
+    },
+    {
+      "label": "downloadRepoZip()",
+      "file_type": "code",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L93",
       "id": "github_downloadrepozip",
-      "community": 2,
+      "community": 1,
       "norm_label": "downloadrepozip()"
     },
     {
@@ -522,7 +558,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_src_lib_telegram_ts",
-      "community": 2,
+      "community": 1,
       "norm_label": "telegram.ts"
     },
     {
@@ -531,7 +567,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts",
       "source_location": "L12",
       "id": "telegram_istelegramconfigured",
-      "community": 2,
+      "community": 1,
       "norm_label": "istelegramconfigured()"
     },
     {
@@ -540,7 +576,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/telegram.ts",
       "source_location": "L29",
       "id": "telegram_backuprepototelegram",
-      "community": 2,
+      "community": 1,
       "norm_label": "backuprepototelegram()"
     },
     {
@@ -549,7 +585,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/api/auth.js",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_api_auth_js",
-      "community": 14,
+      "community": 15,
       "norm_label": "auth.js"
     },
     {
@@ -558,7 +594,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/api/auth.js",
       "source_location": "L1",
       "id": "auth_handler",
-      "community": 14,
+      "community": 15,
       "norm_label": "handler()"
     },
     {
@@ -567,7 +603,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/api/telegram.js",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_api_telegram_js",
-      "community": 15,
+      "community": 16,
       "norm_label": "telegram.js"
     },
     {
@@ -576,7 +612,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/api/telegram.js",
       "source_location": "L1",
       "id": "telegram_handler",
-      "community": 15,
+      "community": 16,
       "norm_label": "handler()"
     },
     {
@@ -585,7 +621,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/api/download.js",
       "source_location": "L1",
       "id": "run_media_abhishek_bbc_repos_github_d_api_download_js",
-      "community": 16,
+      "community": 17,
       "norm_label": "download.js"
     },
     {
@@ -594,7 +630,7 @@
       "source_file": "/run/media/abhishek/BBC/repos/github-d/api/download.js",
       "source_location": "L2",
       "id": "download_handler",
-      "community": 16,
+      "community": 17,
       "norm_label": "handler()"
     }
   ],
@@ -627,7 +663,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
-      "source_location": "L183",
+      "source_location": "L191",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_vite_config_ts",
       "_tgt": "vite_config_downloadmiddleware",
@@ -639,7 +675,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/vite.config.ts",
-      "source_location": "L226",
+      "source_location": "L234",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_vite_config_ts",
       "_tgt": "vite_config_apiplugin",
@@ -699,7 +735,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L35",
+      "source_location": "L37",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
       "_tgt": "actionbar_handlebulkaction",
@@ -711,7 +747,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L53",
+      "source_location": "L55",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
       "_tgt": "actionbar_handlemakeprivate",
@@ -723,7 +759,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L54",
+      "source_location": "L56",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
       "_tgt": "actionbar_handlemakepublic",
@@ -735,7 +771,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L55",
+      "source_location": "L57",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
       "_tgt": "actionbar_handlearchive",
@@ -747,7 +783,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L56",
+      "source_location": "L58",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
       "_tgt": "actionbar_handleunarchive",
@@ -759,7 +795,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L57",
+      "source_location": "L59",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
       "_tgt": "actionbar_handledownloadzip",
@@ -771,7 +807,7 @@
       "relation": "contains",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L91",
+      "source_location": "L93",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
       "_tgt": "actionbar_handledelete",
@@ -780,10 +816,22 @@
       "confidence_score": 1.0
     },
     {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L128",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "_tgt": "actionbar_handleleave",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_layout_actionbar_tsx",
+      "target": "actionbar_handleleave",
+      "confidence_score": 1.0
+    },
+    {
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L53",
+      "source_location": "L55",
       "weight": 1.0,
       "_src": "actionbar_handlemakeprivate",
       "_tgt": "actionbar_handlebulkaction",
@@ -795,7 +843,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L54",
+      "source_location": "L56",
       "weight": 1.0,
       "_src": "actionbar_handlemakepublic",
       "_tgt": "actionbar_handlebulkaction",
@@ -807,7 +855,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L55",
+      "source_location": "L57",
       "weight": 1.0,
       "_src": "actionbar_handlearchive",
       "_tgt": "actionbar_handlebulkaction",
@@ -819,7 +867,7 @@
       "relation": "calls",
       "confidence": "EXTRACTED",
       "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
-      "source_location": "L56",
+      "source_location": "L58",
       "weight": 1.0,
       "_src": "actionbar_handleunarchive",
       "_tgt": "actionbar_handlebulkaction",
@@ -874,6 +922,42 @@
       "_tgt": "github_deleterepo",
       "source": "actionbar_handledelete",
       "target": "github_deleterepo"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L142",
+      "weight": 1.0,
+      "_src": "actionbar_handleleave",
+      "_tgt": "telegram_backuprepototelegram",
+      "source": "actionbar_handleleave",
+      "target": "telegram_backuprepototelegram"
+    },
+    {
+      "relation": "calls",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/layout/ActionBar.tsx",
+      "source_location": "L159",
+      "weight": 1.0,
+      "_src": "actionbar_handleleave",
+      "_tgt": "github_leaverepo",
+      "source": "actionbar_handleleave",
+      "target": "github_leaverepo"
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/components/ui/LeaveModal.tsx",
+      "source_location": "L22",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_components_ui_leavemodal_tsx",
+      "_tgt": "leavemodal_handleclose",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_components_ui_leavemodal_tsx",
+      "target": "leavemodal_handleclose",
+      "confidence_score": 1.0
     },
     {
       "relation": "contains",
@@ -1086,6 +1170,18 @@
       "source_location": "L84",
       "weight": 1.0,
       "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "_tgt": "github_leaverepo",
+      "source": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
+      "target": "github_leaverepo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L93",
+      "weight": 1.0,
+      "_src": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
       "_tgt": "github_downloadrepozip",
       "source": "run_media_abhishek_bbc_repos_github_d_src_lib_github_ts",
       "target": "github_downloadrepozip",
@@ -1137,6 +1233,18 @@
       "_tgt": "github_getoctokit",
       "source": "github_getoctokit",
       "target": "github_deleterepo",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "confidence": "EXTRACTED",
+      "source_file": "/run/media/abhishek/BBC/repos/github-d/src/lib/github.ts",
+      "source_location": "L85",
+      "weight": 1.0,
+      "_src": "github_leaverepo",
+      "_tgt": "github_getoctokit",
+      "source": "github_getoctokit",
+      "target": "github_leaverepo",
       "confidence_score": 1.0
     },
     {
